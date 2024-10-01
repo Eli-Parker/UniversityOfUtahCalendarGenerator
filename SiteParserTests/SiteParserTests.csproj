@@ -30,6 +30,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SiteParser\SiteParser.csproj" />
+    <ProjectReference Include="..\WebsiteParser\EventList.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -56,27 +56,33 @@ public class SiteParser
         // Grab the year from the title of the document
         string year = doc.DocumentNode.SelectSingleNode("//title").InnerText.Split(" ")[1];
 
-
-        // Search all HTML elements of type <Table>
-        var tables = doc.DocumentNode.SelectNodes("//table");
+        // Search for all HTML elements of type <Table>
+        HtmlNodeCollection tables = doc.DocumentNode.SelectNodes("//table");
 
         // Loop through all tables
         foreach (var table in tables)
         {
+            // Add table values to list
             AddTableToEventList(table, list, year);
         }
     }
 
+    /// <summary>
+    /// Adds all the events on a given table HTML node to the given event list.
+    /// <remarks>
+    /// Year is a separate parameter because the tables on their own do not contain the year.
+    /// </remarks>
+    /// </summary>
+    /// <param name="table"> The node which contains the table to evaluate. </param>
+    /// <param name="list"> The list to add all the events to. </param>
+    /// <param name="year"> The year to add to the event. </param>
     private static void AddTableToEventList(HtmlNode table, EventList list, string year)
     {
         // Get the title of the table
         string tableTitle = table.SelectSingleNode("caption").InnerText;
 
-        // Get all the rows in the table
-        HtmlNodeCollection rows = table.SelectNodes("tr");
-
-        // Remove the first row from the list of tables, as it contains the table value titles
-        rows.First().Remove();
+        // Get all the rows in the table minus the title
+        HtmlNodeCollection rows = table.SelectSingleNode("tbody").SelectNodes("tr");
 
         // Loop through all rows
         foreach (HtmlNode row in rows)
@@ -123,9 +129,12 @@ public class SiteParser
         // Split the text based on the date range splitter sign
         List<string> dateSplitByRange = rawDate.Split("-").ToList();
 
+        // Format the day of the week out of the value
+        string formattedFirstDate = Regex.Replace(dateSplitByRange[0], @"^.*,", string.Empty);
+
         // Date is formatted as "Month Day" so split it and store result
-        string month = dateSplitByRange[0].Split(" ")[0];
-        string day = dateSplitByRange[0].Split(" ")[1];
+        string month = formattedFirstDate.Split(" ")[1];
+        string day = formattedFirstDate.Split(" ")[0];
         dateSplitByRange.RemoveAt(0);
 
         startDate = ParseDateValues(day, month, year);
@@ -139,12 +148,12 @@ public class SiteParser
                 dateSplitByRange[0] = dateSplitByRange[0] + " " + startDate.ToString("MMMM");
             }
 
-            // Use a regex to remove any occurrences of "DoW.," from the string. See method doc for explanation
-            dateSplitByRange[0] = Regex.Replace(dateSplitByRange[0], @"\s[A-Za-z]+\.,", string.Empty);
+            // Format the day of the week out of the value
+            formattedFirstDate = Regex.Replace(dateSplitByRange[0], @"^.*,", string.Empty);
 
             // Set the end date value
-            month = dateSplitByRange[0].Split(" ")[0];
-            day = dateSplitByRange[0].Split(" ")[1];
+            month = formattedFirstDate.Split(" ")[1];
+            day = formattedFirstDate.Split(" ")[0];
             endDate = ParseDateValues(day, month, year);
 
             // If month of end date is before month of start date, year must be different

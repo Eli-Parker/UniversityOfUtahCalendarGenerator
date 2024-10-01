@@ -7,6 +7,7 @@
 namespace SiteParserTests;
 
 using SiteParser;
+using EventList;
 
 /// <summary>
 /// <para>
@@ -29,6 +30,7 @@ public class SiteParserTests
     [TestMethod]
     public void TestConstructor()
     {
-        SiteParser parser = new SiteParser("https://registrar.utah.edu/academic-calendars/fall2024.php");
+        EventList list = new();
+        SiteParser parser = new SiteParser("https://registrar.utah.edu/academic-calendars/fall2024.php", list);
     }
 }
