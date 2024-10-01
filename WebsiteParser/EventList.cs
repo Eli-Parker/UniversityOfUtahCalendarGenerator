@@ -1,12 +1,17 @@
-﻿namespace EventGatherer;
+﻿// Code created by Eli Parker
+namespace EventList;
 
 /// <summary>
 /// <para>
-/// Class which contains functionality to parse calendar information
-/// from the University of Utah's break schedule website.
+/// Class to list out all the events separated by the table they came from.
+/// 
 /// </para>
+/// <remarks>
+/// You may notice that the code doesn't put many restrictions on what the formatting of events can look like.
+/// This was by design, as I wanted to preserve the formatting of the original website as much as possible
+/// </remarks>
 /// </summary>
-public class EventGatherer
+public class EventList
 {
 
     /// <summary>
@@ -23,21 +28,16 @@ public class EventGatherer
     /// but I felt is made for a simplistic and fast implementation.
     /// </para>
     /// </summary>
-    private readonly Dictionary<string, List<Event>> events;
+    private readonly Dictionary<string, List<Event>> Events;
 
     /// <summary>
-    /// Creates a new instance of the <see cref="EventGatherer"/> class.
+    /// Creates a new instance of the <see cref="EventList"/> class.
     /// </summary>
     /// <param name="link"> the URL of the website to pull calendar data from.</param>
-    public EventGatherer(string URL) 
+    public EventList() 
     {
-        // Initialize needed structures and instance variables
-        this.events = new();
-
-
-        // Call Helper method to initialize the link
-
-        // Call other helper to process the page & look for calendar date data
+        // Initialize needed structures
+        this.Events = new();
     }
 
     /// <summary>
@@ -52,7 +52,7 @@ public class EventGatherer
     /// <returns> A list of strings which contains all the lists of events.</returns>
     public List<string> GetAllEventTables()
     {
-        return events.Keys.ToList();
+        return Events.Keys.ToList();
     }
 
 
@@ -78,7 +78,7 @@ public class EventGatherer
 
         // Get the values associated with the given table
         List<Event>? rawEvents;
-        this.events.TryGetValue(table, out rawEvents);
+        this.Events.TryGetValue(table, out rawEvents);
 
         // Run through all values and add them to lists
         if (rawEvents != null) 
@@ -97,6 +97,28 @@ public class EventGatherer
                 tableDatesEnd.Add(end);
             }
         }
+    }
+
+    /// <summary>
+    /// Add a new event to the list of events.
+    /// </summary>
+    /// <param name="eventTable"> The table which the particular event came from.</param>
+    /// <param name="name"> The name of the event</param>
+    /// <param name="startDate"> The start date (first day) which the given event takes place.</param>
+    /// <param name="endDate"> The final date (last day) which the given event takes place.</param>
+    /// <returns></returns>
+    public void AddEvent(string eventTable, string name, DateOnly startDate, DateOnly endDate) 
+    {
+        // Check to see if there already exists an event list for the given table
+        bool tableAlreadyExists = Events.ContainsKey(eventTable);
+        if (! tableAlreadyExists)
+        {
+            // Table does not already exist, make a new one
+            Events.Add(eventTable, new());
+        }
+
+        // Add new Event object
+        Events[eventTable].Add(new Event(name, startDate, endDate));
     }
 
     /// <summary>
