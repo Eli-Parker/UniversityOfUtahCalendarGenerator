@@ -8,7 +8,6 @@ namespace SiteParser;
 
 using HtmlAgilityPack;
 using EventList;
-using System.Numerics;
 using System.Text.RegularExpressions;
 
 /// <summary>
@@ -80,6 +79,9 @@ public class SiteParser
     {
         // Get the title of the table
         string tableTitle = table.SelectSingleNode("caption").InnerText;
+
+        // Format title
+        tableTitle = Regex.Replace(tableTitle, @"&[a-zA-Z0-9#]+;", string.Empty);
 
         // Get all the rows in the table minus the title
         HtmlNodeCollection rows = table.SelectSingleNode("tbody").SelectNodes("tr");
@@ -157,7 +159,7 @@ public class SiteParser
             // Check for the case where the date is formatted as "Month Day - day"
             if (int.TryParse(dateSplitByRange[0].Trim(), out _))
             {
-                dateSplitByRange[0] = dateSplitByRange[0] + " " + startDate.ToString("MMMM");
+                dateSplitByRange[0] =  startDate.ToString("MMMM") + " " + dateSplitByRange[0];
             }
 
             // Format the day of the week out of the value
@@ -171,7 +173,7 @@ public class SiteParser
             // If month of end date is before month of start date, year must be different
             if(endDate.Month < startDate.Month)
             {
-                endDate.AddYears(1);
+                endDate = endDate.AddYears(1);
             }
         }
         else
@@ -196,8 +198,34 @@ public class SiteParser
         dayStr = dayStr.Trim().ToLower();
 
         // Convert the month to a number
-        int month = DateTime.ParseExact(monthStr, "MMMM", System.Globalization.CultureInfo.CurrentCulture).Month;
-        // TODO fix implementation for abbreviated months (i.e. Jan)
+        int month = 0;
+        try
+        {
+            // First try built-in parse method
+            month = DateTime.ParseExact(monthStr, "MMMM", System.Globalization.CultureInfo.CurrentCulture).Month;
+        }
+        catch(FormatException)
+        {
+            // If parse fails, use a switch
+            // Format month string to get rid of periods
+            monthStr = Regex.Replace(monthStr, @"\.", string.Empty);
+            month = monthStr.ToLower() switch
+            {
+                "jan" =>  1,
+                "feb" =>  2,
+                "mar" =>  3,
+                "apr" =>  4,
+                "may" =>  5,
+                "jun" =>  6,
+                "jul" =>  7,
+                "aug" =>  8,
+                "sep" =>  9,
+                "oct" => 10,
+                "nov" => 11,
+                "dec" => 12,
+                 _    =>  0
+            };
+        }
 
         // Convert the day and year to a number
         int day = int.Parse(dayStr);

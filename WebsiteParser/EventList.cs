@@ -19,7 +19,7 @@ namespace EventList;
 /// This was by design, as I wanted to preserve the formatting of the original website as much as possible.
 /// </remarks>
 /// </summary>
-[DebuggerDisplay("EventList: {Events.Count} tables")]
+[DebuggerDisplay("EventList: {events.Count} tables")]
 public class EventList
 {
     /// <summary>
