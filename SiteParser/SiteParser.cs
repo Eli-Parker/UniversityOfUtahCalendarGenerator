@@ -94,8 +94,9 @@ public class SiteParser
                 values.Add(tableCell.InnerText);
             }
 
-            // Process token values
-            string eventTitle = values[0];
+            // Process token values and remove HTML entities
+            string eventTitle = Regex.Replace(values[0], @"&amp;", "&");
+            eventTitle = Regex.Replace(eventTitle, @"&[a-zA-Z0-9#]+;", string.Empty);
 
             // Format the date values
             DateOnly startDate;
@@ -126,15 +127,26 @@ public class SiteParser
     /// <param name="endDate"> The ending date from the rawDate.</param>
     private static void ConvertTextToDate(string rawDate, string year, out DateOnly startDate, out DateOnly endDate)
     {
+        // Remove HTML entities
+        rawDate = Regex.Replace(rawDate, @"&[a-zA-Z0-9#]+;", string.Empty);
+
         // Split the text based on the date range splitter sign
         List<string> dateSplitByRange = rawDate.Split("-").ToList();
 
-        // Format the day of the week out of the value
-        string formattedFirstDate = Regex.Replace(dateSplitByRange[0], @"^.*,", string.Empty);
+        // Check the case where days of the week is formatted with a dash (e.g. mon-fri)
+        if(dateSplitByRange.Count == 3)
+        {
+            dateSplitByRange.RemoveAt(0);
+        }
 
-        // Date is formatted as "Month Day" so split it and store result
-        string month = formattedFirstDate.Split(" ")[1];
-        string day = formattedFirstDate.Split(" ")[0];
+        // Format the day of the week out of the value
+        string formattedFirstDate = Regex.Replace(dateSplitByRange[0], @"^.*,", string.Empty).Trim();
+
+        // Date is formatted as "Month Day", split it and store result
+        string month = formattedFirstDate.Split(" ")[0];
+        string day = formattedFirstDate.Split(" ")[1];
+
+        // Remove value we already checked for simplicity
         dateSplitByRange.RemoveAt(0);
 
         startDate = ParseDateValues(day, month, year);
@@ -149,11 +161,11 @@ public class SiteParser
             }
 
             // Format the day of the week out of the value
-            formattedFirstDate = Regex.Replace(dateSplitByRange[0], @"^.*,", string.Empty);
+            formattedFirstDate = Regex.Replace(dateSplitByRange[0], @"^.*,", string.Empty).Trim();
 
             // Set the end date value
-            month = formattedFirstDate.Split(" ")[1];
-            day = formattedFirstDate.Split(" ")[0];
+            month = formattedFirstDate.Split(" ")[0];
+            day = formattedFirstDate.Split(" ")[1];
             endDate = ParseDateValues(day, month, year);
 
             // If month of end date is before month of start date, year must be different
@@ -184,22 +196,8 @@ public class SiteParser
         dayStr = dayStr.Trim().ToLower();
 
         // Convert the month to a number
-        int month = monthStr switch
-        {
-            "january" => 1,
-            "february" => 2,
-            "march" => 3,
-            "april" => 4,
-            "may" => 5,
-            "june" => 6,
-            "july" => 7,
-            "august" => 8,
-            "september" => 9,
-            "october" => 10,
-            "november" => 11,
-            "december" => 12,
-            _ => 0
-        };
+        int month = DateTime.ParseExact(monthStr, "MMMM", System.Globalization.CultureInfo.CurrentCulture).Month;
+        // TODO fix implementation for abbreviated months (i.e. Jan)
 
         // Convert the day and year to a number
         int day = int.Parse(dayStr);
