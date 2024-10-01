@@ -1,3 +1,8 @@
+// <copyright file="EventListTests.cs" company="Eli Parker">
+// Copyright (c) 2024 Eli Parker. All rights reserved.
+// </copyright>
+// Implementation written by Eli Parker
+// Date: 10/1/24
 namespace WebsiteParserTests;
 
 using EventList;
@@ -5,17 +10,11 @@ using System.Collections.Generic;
 
 /// <summary>
 /// <para>
-/// Contains a (hopefully) robust test suite for the <see cref="EventList"/> class.
+/// Contains a basic test suite for the <see cref="EventList"/> class.
 /// </para>
-/// <para>
-/// Notable testing considerations included:
-/// <list type="bullet">
-/// <item> What happens when you give an invalid link</item>
-/// <item> What happens when you test Websites of different years? </item>
-/// <item> Does the program error out when you give it websites from the same domain with different info? </item>
-/// <item> </item>
-/// </list>
-/// </para>
+/// <remarks>
+/// This program was only tested with a few basic cases, just to verify its in working order
+/// </remarks>
 /// </summary>
 [TestClass]
 public class EventListTests
@@ -45,18 +44,10 @@ public class EventListTests
         
     }
 
-    public void TestConstructor_Empty()
-    {
-        EventList list = new EventList();
-        List<string> expectedTableNames = [];
-        string expectedTableSetString = string.Join(", ", expectedTableNames);
-
-        List<string> actualResult = list.GetAllEventTables();
-        string actualSetString = string.Join(", ", actualResult);
-
-        Assert.AreEqual(expectedTableSetString, actualSetString);
-    }
-
+    /// <summary>
+    /// Test that the values are correct with a basic given input.
+    /// </summary>
+    [TestMethod]
     public void TestConstructor_Values() 
     {
         EventList list = new EventList();
@@ -102,6 +93,36 @@ public class EventListTests
     }
 
     /// <summary>
+    /// Test that an empty constructor returns an empty list of tables and doesn't error out.
+    /// </summary>
+    [TestMethod]
+    public void TestConstructor_Empty()
+    {
+        EventList list = new EventList();
+
+        List<string> actualResult = list.GetAllEventTables();
+        string actualSetString = string.Join(", ", actualResult);
+
+        Assert.AreEqual(string.Empty, actualSetString);
+    }
+
+    /// <summary>
+    /// Check that calling for the events of a table that
+    /// doesn't exist doesn't error out and returns empty lists.
+    /// </summary>
+    [TestMethod]
+    public void testConstructor_ValuesEmpty()
+    {
+        EventList list = new EventList();
+
+        list.GetEvents("table 1", out List<string> tableEvents, out List<DateOnly> ds, out List<DateOnly> de);
+
+        Assert.AreEqual(tableEvents.Count, 0);
+        Assert.AreEqual(ds.Count, 0);
+        Assert.AreEqual(de.Count, 0);
+    }
+
+    /// <summary>
     /// Test the behavior of the list when events are added.
     /// </summary>
     [TestMethod]
@@ -112,7 +133,6 @@ public class EventListTests
         list.AddEvent("table 1", "event 1", new DateOnly(2024, 12, 24), new DateOnly(2024, 12, 25));
 
         //Check for only multiple values
-
         list.GetEvents("table 1", out List<string> tableEvents, out List<DateOnly> ds, out List<DateOnly> de);
 
         Assert.AreEqual(tableEvents.Count, 2);

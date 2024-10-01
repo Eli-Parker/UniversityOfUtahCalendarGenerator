@@ -1,16 +1,25 @@
-﻿// Code created by Eli Parker
+﻿// <copyright file="EventList.cs" company="Eli Parker">
+// Copyright (c) 2024 Eli Parker. All rights reserved.
+// </copyright>
+// Implementation written by Eli Parker
+// Date: 10/1/24
+
+using System.Diagnostics;
+
 namespace EventList;
 
 /// <summary>
 /// <para>
 /// Class to list out all the events separated by the table they came from.
-/// 
+/// This serves two main purposes: Store the data in a way that is easy to access and manipulate,
+/// and to make it easy to display the data in a user-friendly way.
 /// </para>
 /// <remarks>
 /// You may notice that the code doesn't put many restrictions on what the formatting of events can look like.
-/// This was by design, as I wanted to preserve the formatting of the original website as much as possible
+/// This was by design, as I wanted to preserve the formatting of the original website as much as possible.
 /// </remarks>
 /// </summary>
+[DebuggerDisplay("EventList: {Events.Count} tables")]
 public class EventList
 {
 

@@ -7,12 +7,15 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventList", "WebsiteParser\
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{4516E7E7-F029-48D2-A2F2-C2DDE55C739F}"
 	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
 		README.md = README.md
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventListTests", "WebsiteParserTests\EventListTests.csproj", "{792A50A2-A8BE-4C2F-BC25-8C9EF3B3C6D1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SiteParser", "SiteParser\SiteParser.csproj", "{34595B81-744D-4379-94A9-325EB9B028B7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SiteParserTests", "SiteParserTests\SiteParserTests.csproj", "{0AD742DB-0119-4C03-96E0-97BCB84A8233}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -32,6 +35,10 @@ Global
 		{34595B81-744D-4379-94A9-325EB9B028B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{34595B81-744D-4379-94A9-325EB9B028B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{34595B81-744D-4379-94A9-325EB9B028B7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0AD742DB-0119-4C03-96E0-97BCB84A8233}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0AD742DB-0119-4C03-96E0-97BCB84A8233}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0AD742DB-0119-4C03-96E0-97BCB84A8233}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0AD742DB-0119-4C03-96E0-97BCB84A8233}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
