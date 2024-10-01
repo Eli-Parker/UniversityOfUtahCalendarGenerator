@@ -13,15 +13,15 @@ using System.Collections.Generic;
 /// Contains a basic test suite for the <see cref="EventList"/> class.
 /// </para>
 /// <remarks>
-/// This program was only tested with a few basic cases, just to verify its in working order
+/// This program is currently only tested with a few basic cases, just to
+/// verify its in working order and will work for my use case.
 /// </remarks>
 /// </summary>
 [TestClass]
 public class EventListTests
 {
-
     /// <summary>
-    /// Test a basic valid case of adding two values with dates to two tables
+    /// Test a basic valid case of adding two values with dates to two tables.
     /// </summary>
     [TestMethod]
     public void TestConstructor_Tables()
@@ -40,15 +40,13 @@ public class EventListTests
         string actualSetString = string.Join(", ", actualResult);
 
         Assert.AreEqual(expectedTableSetString, actualSetString);
-
-        
     }
 
     /// <summary>
     /// Test that the values are correct with a basic given input.
     /// </summary>
     [TestMethod]
-    public void TestConstructor_Values() 
+    public void TestConstructor_Values()
     {
         EventList list = new EventList();
         list.AddEvent("table 1", "event 1", new DateOnly(2024, 12, 24), new DateOnly(2024, 12, 25));
@@ -93,10 +91,11 @@ public class EventListTests
     }
 
     /// <summary>
-    /// Test that an empty constructor returns an empty list of tables and doesn't error out.
+    /// Test that an empty constructor returns an
+    /// empty list of tables and doesn't error out.
     /// </summary>
     [TestMethod]
-    public void TestConstructor_Empty()
+    public void TestConstructor_TablesEmpty()
     {
         EventList list = new EventList();
 
@@ -111,7 +110,7 @@ public class EventListTests
     /// doesn't exist doesn't error out and returns empty lists.
     /// </summary>
     [TestMethod]
-    public void testConstructor_ValuesEmpty()
+    public void TestConstructor_ValuesEmpty()
     {
         EventList list = new EventList();
 
@@ -126,18 +125,17 @@ public class EventListTests
     /// Test the behavior of the list when events are added.
     /// </summary>
     [TestMethod]
-    public void TestAddEvent_DuplicateValues() 
+    public void TestAddEvent_DuplicateValues()
     {
         EventList list = new EventList();
         list.AddEvent("table 1", "event 1", new DateOnly(2024, 12, 24), new DateOnly(2024, 12, 25));
         list.AddEvent("table 1", "event 1", new DateOnly(2024, 12, 24), new DateOnly(2024, 12, 25));
 
-        //Check for only multiple values
+        // Check for only multiple values
         list.GetEvents("table 1", out List<string> tableEvents, out List<DateOnly> ds, out List<DateOnly> de);
 
         Assert.AreEqual(tableEvents.Count, 2);
         Assert.AreEqual(ds.Count, 2);
         Assert.AreEqual(de.Count, 2);
-
     }
 }

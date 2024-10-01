@@ -20,6 +20,9 @@ namespace SiteParserTests;
 [TestClass]
 public class SiteParserTests
 {
+    /// <summary>
+    /// TODO write more tests.
+    /// </summary>
     [TestMethod]
     public void TestMethod1()
     {
