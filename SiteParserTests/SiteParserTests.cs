@@ -3,7 +3,10 @@
 // </copyright>
 // Implementation written by Eli Parker
 // Date: 10/1/24
+
 namespace SiteParserTests;
+
+using SiteParser;
 
 /// <summary>
 /// <para>
@@ -21,10 +24,11 @@ namespace SiteParserTests;
 public class SiteParserTests
 {
     /// <summary>
-    /// TODO write more tests.
+    /// Test the constructor doesn't throw an error when given a valid link.
     /// </summary>
     [TestMethod]
-    public void TestMethod1()
+    public void TestConstructor()
     {
+        SiteParser parser = new SiteParser("https://registrar.utah.edu/academic-calendars/fall2024.php");
     }
 }
