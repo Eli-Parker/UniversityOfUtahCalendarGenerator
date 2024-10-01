@@ -33,20 +33,29 @@ public class InvalidLinkException : Exception
 /// </para>
 /// <para>
 /// In terms of the formatting of the website: All rows are contained on tables
-/// TODO finish me
+/// marked with the "table" HTML tag, and each row is marked with the "tr" tag within "tbody".
+/// </para>
+/// <para>
+/// The program works by drilling into the given HTML document and finding all the tables, then
+/// taking each entry and formatting it into the proper numbers from text,
+/// then adding it to an <see cref="EventList"/> object.
 /// </para>
 /// </summary>
 public class SiteParser
 {
     /// <summary>
-    /// Initializes a new instance of the <see cref="SiteParser"/> class.
+    /// Parses the given site passed on the given URL. Note that the
+    /// given URL must be a link to the University of Utah campus site.
     /// </summary>
-    /// <param name="url"> The link to the University of Utah campus site.</param>
-    /// <param name="list"> The list of events to add site info to. </param>
-    public SiteParser(string url, EventList list)
+    /// <param name="url"> The link to the University of Utah campus site. </param>
+    /// <returns> An EventList object which contains all event on the given U of U Campus Site. </returns>
+    public static EventList ParseSite(string url)
     {
         // Check if the URL is valid
         CheckURL(url);
+
+        // Initialize EventList
+        EventList list = new();
 
         // Setup web scraper
         var web = new HtmlWeb();
@@ -64,6 +73,9 @@ public class SiteParser
             // Add table values to list
             AddTableToEventList(table, list, year);
         }
+
+        // Return final EventList
+        return list;
     }
 
     /// <summary>
@@ -80,7 +92,7 @@ public class SiteParser
         // Get the title of the table
         string tableTitle = table.SelectSingleNode("caption").InnerText;
 
-        // Format title
+        // Remove HTML entities from title
         tableTitle = Regex.Replace(tableTitle, @"&[a-zA-Z0-9#]+;", string.Empty);
 
         // Get all the rows in the table minus the title
@@ -105,6 +117,7 @@ public class SiteParser
             DateOnly endDate;
             ConvertTextToDate(values[1], year, out startDate, out endDate);
 
+            // Add to EventList with formatted info
             list.AddEvent(tableTitle, eventTitle, startDate, endDate);
         }
     }

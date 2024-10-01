@@ -28,9 +28,17 @@ public class SiteParserTests
     /// Test the constructor doesn't throw an error when given a valid link.
     /// </summary>
     [TestMethod]
-    public void TestConstructor()
+    public void TestConstructor_NoErrors()
     {
-        EventList list = new();
-        SiteParser parser = new SiteParser("https://registrar.utah.edu/academic-calendars/fall2024.php", list);
+        EventList list = SiteParser.ParseSite("https://registrar.utah.edu/academic-calendars/fall2024.php");
+    }
+
+    /// <summary>
+    /// Test that the list is full of the correct values once the parser is finished.
+    /// </summary>
+    [TestMethod]
+    public void TestConstructor_FillsListWithProperValues()
+    {
+        EventList list = SiteParser.ParseSite("https://registrar.utah.edu/academic-calendars/fall2024.php");
     }
 }
