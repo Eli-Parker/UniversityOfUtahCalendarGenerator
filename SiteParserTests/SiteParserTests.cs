@@ -25,11 +25,11 @@ using EventList;
 public class SiteParserTests
 {
     /// <summary>
-    /// Test the constructor gets through an entire valid site
+    /// Test ParseSite gets through an entire valid site
     /// without throwing an error when given a valid link.
     /// </summary>
     [TestMethod]
-    public void TestConstructor_NoErrors()
+    public void TestParseSite_NoErrors()
     {
         EventList list = SiteParser.ParseSite("https://registrar.utah.edu/academic-calendars/spring2024.php");
     }
@@ -38,7 +38,7 @@ public class SiteParserTests
     /// Test that the list is full of the correct values once the parser is finished.
     /// </summary>
     [TestMethod]
-    public void TestConstructor_FillsListWithProperValues()
+    public void TestParseSite_FillsListWithProperValues()
     {
         EventList list = SiteParser.ParseSite("https://registrar.utah.edu/academic-calendars/fall2024.php");
 
@@ -105,5 +105,44 @@ public class SiteParserTests
         Assert.AreEqual(
             string.Join(", ", expectedEventEndDates),
             string.Join(", ", actualEventEndDates) );
+    }
+
+    /// <summary>
+    /// Test that parse site throws an InvalidLinkException when bad links are given.
+    /// </summary>
+    [TestMethod]
+    public void TestParseSite_BadLinks()
+    {
+        Assert.ThrowsException<InvalidLinkException>(() => { _ = SiteParser.ParseSite(string.Empty); });
+        Assert.ThrowsException<InvalidLinkException>(() => { _ = SiteParser.ParseSite("google.com"); });
+        Assert.ThrowsException<InvalidLinkException>(() => { _ = SiteParser.ParseSite("https://www.google.com/"); });
+        Assert.ThrowsException<InvalidLinkException>(() => { _ = SiteParser.ParseSite("https://registrar.utah.edu/handbook/transfer-student-resources.php"); });
+        Assert.ThrowsException<InvalidLinkException>(() => { _ = SiteParser.ParseSite("https://registrar.utah.edu/academic-calendars/dentistry-2024-2025.php"); });
+    }
+
+    /// <summary>
+    /// Test that parse site throws an error when the page is invalid but all other checks pass.
+    /// </summary>
+    [TestMethod]
+    public void TestParseSite_LinkWithoutPHPAtEnd()
+    {
+        Assert.ThrowsException<InvalidLinkException>(() => { _ = SiteParser.ParseSite("https://registrar.utah.edu/academic-calendars/fall2024"); });
+        Assert.ThrowsException<InvalidLinkException>(() => { _ = SiteParser.ParseSite("https://registrar.utah.edu/academic-calendars/wefwefwef.php"); });
+    }
+
+    /// <summary>
+    /// <para>
+    /// Test that a website which is invalid because the HTML reader cant get it
+    /// throws an invalid link exception instead of another exception from libraries.
+    /// Intended to test what happens when the website goes down.
+    /// </para>
+    /// NOTE: To properly use this test case, CheckURL needs to be disabled in <see cref="SiteParser"/>.
+    /// Otherwise this throws an invalid link exception for a different reason.
+    /// </summary>
+    [TestMethod]
+    [ExpectedException(typeof(InvalidLinkException))]
+    public void TestParseSite_DownWebsite()
+    {
+        _ = SiteParser.ParseSite(string.Empty);
     }
 }

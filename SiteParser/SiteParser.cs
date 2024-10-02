@@ -58,14 +58,30 @@ public class SiteParser
         EventList list = new();
 
         // Setup web scraper
-        HtmlWeb web = new HtmlWeb();
-        HtmlDocument doc = web.Load(url);
+        HtmlDocument doc;
+
+        // Wrap in try-catch in case of downed website
+        try
+        {
+            HtmlWeb web = new HtmlWeb();
+            doc = web.Load(url);
+        }
+        catch (UriFormatException e)
+        {
+            throw new InvalidLinkException(e.Message);
+        }
 
         // Grab the year from the title of the document
         string year = doc.DocumentNode.SelectSingleNode("//title").InnerText.Split(" ")[1];
 
         // Search for all HTML elements of type <Table>
         HtmlNodeCollection tables = doc.DocumentNode.SelectNodes("//table");
+
+        if(tables == null)
+        {
+            // No tables, link must be invalid or not exist
+            throw new InvalidLinkException("Invalid URL, check that provided URL goes to the right place. (Dev: URL has no table HTML attributes in HTMLdoc)");
+        }
 
         // Loop through all tables
         foreach (var table in tables)
@@ -268,7 +284,16 @@ public class SiteParser
         // Check if the URL is from the correct domain and has the right formatting
         if (!url.Contains("https://registrar.utah.edu/academic-calendars/"))
         {
-            throw new InvalidLinkException("The URL must be a link to the University of Utah campus site.");
+            throw new InvalidLinkException("The URL must be a link to the University of Utah campus site (i.e. https://registrar.utah.edu/academic-calendars/fall2024.php)");
+        }
+
+        // Check for a semester calendar specifically
+        bool hasValidSemester = url.Contains("fall") || url.Contains("spring") || url.Contains("summer");
+        bool hasYear = Regex.IsMatch(url, @"[0-9]{4}");
+
+        if (!hasYear || !hasValidSemester)
+        {
+            throw new InvalidLinkException("The ending of the URL must be a valid semester and year (i.e. [beginning of link]/fall2024.php) ");
         }
     }
 }
