@@ -145,4 +145,63 @@ public class SiteParserTests
     {
         _ = SiteParser.ParseSite(string.Empty);
     }
+
+    /// <summary>
+    /// <para>
+    /// Test every single calendar site with the correct formatting
+    /// to ensure that the program can handle all situations that are likely
+    /// to occur in the future.
+    /// </para>
+    /// <remarks>
+    /// Note that this method is not intended to be run every time the program is run,
+    /// as I am not a big fan of accidental DDOS attacks or being IP banned from the website
+    /// </remarks>
+    /// </summary>
+    [TestMethod]
+    public void TestParseSite_AllAvailableSites()
+    {
+        _ = SiteParser.ParseSite("https://registrar.utah.edu/academic-calendars/summer2019.php");
+        Thread.Sleep(1000);
+        _ = SiteParser.ParseSite("https://registrar.utah.edu/academic-calendars/fall2019.php");
+        Thread.Sleep(1000);
+
+        _ = SiteParser.ParseSite("https://registrar.utah.edu/academic-calendars/spring2020.php");
+        Thread.Sleep(1000);
+        _ = SiteParser.ParseSite("https://registrar.utah.edu/academic-calendars/summer2020.php");
+        Thread.Sleep(1000);
+        _ = SiteParser.ParseSite("https://registrar.utah.edu/academic-calendars/fall2020.php");
+        Thread.Sleep(1000);
+
+        _ = SiteParser.ParseSite("https://registrar.utah.edu/academic-calendars/spring2021.php");
+        Thread.Sleep(1000);
+        _ = SiteParser.ParseSite("https://registrar.utah.edu/academic-calendars/summer2021.php");
+        Thread.Sleep(1000);
+        _ = SiteParser.ParseSite("https://registrar.utah.edu/academic-calendars/fall2021.php");
+        Thread.Sleep(1000);
+
+        _ = SiteParser.ParseSite("https://registrar.utah.edu/academic-calendars/spring2022.php");
+        Thread.Sleep(1000);
+        _ = SiteParser.ParseSite("https://registrar.utah.edu/academic-calendars/summer2022.php");
+        Thread.Sleep(1000);
+        _ = SiteParser.ParseSite("https://registrar.utah.edu/academic-calendars/fall2022.php");
+        Thread.Sleep(1000);
+
+        _ = SiteParser.ParseSite("https://registrar.utah.edu/academic-calendars/spring2023.php");
+        Thread.Sleep(1000);
+        _ = SiteParser.ParseSite("https://registrar.utah.edu/academic-calendars/summer2023.php");
+        Thread.Sleep(1000);
+        _ = SiteParser.ParseSite("https://registrar.utah.edu/academic-calendars/fall2023.php");
+        Thread.Sleep(1000);
+
+        _ = SiteParser.ParseSite("https://registrar.utah.edu/academic-calendars/spring2024.php");
+        Thread.Sleep(1000);
+        _ = SiteParser.ParseSite("https://registrar.utah.edu/academic-calendars/summer2024.php");
+        Thread.Sleep(1000);
+        _ = SiteParser.ParseSite("https://registrar.utah.edu/academic-calendars/fall2024.php");
+        Thread.Sleep(1000);
+
+        _ = SiteParser.ParseSite("https://registrar.utah.edu/academic-calendars/spring2025.php");
+        Thread.Sleep(1000);
+        _ = SiteParser.ParseSite("https://registrar.utah.edu/academic-calendars/summer2025.php");
+    }
 }

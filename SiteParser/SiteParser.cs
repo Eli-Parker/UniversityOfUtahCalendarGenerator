@@ -157,68 +157,99 @@ public class SiteParser
     /// </summary>
     /// <param name="rawDate"> The unparsed string. For formatting see the class description.</param>
     /// <param name="year">A string which contains the year, formatted as YYYY (e.g. 2024).</param>
-    /// <param name="startDate"> The starting date from the rawDate.</param>
-    /// <param name="endDate"> The ending date from the rawDate.</param>
+    /// <param name="startDate"> The starting date from the rawDate. Note that this parameter will be (01,01,0001) if the date given is invalid (such as N/A). </param>
+    /// <param name="endDate"> The ending date from the rawDate. Note that this parameter will be (01,01,0001) if the date given is invalid (such as N/A). </param>
     private static void ConvertTextToDate(string rawDate, string year, out DateOnly startDate, out DateOnly endDate)
     {
-        // Remove HTML entities
-        rawDate = Regex.Replace(rawDate, @"&[a-zA-Z0-9#]+;", string.Empty);
+        // Use a complicated regex to find all the dates in the string
+        var regexMatches = Regex.Matches(rawDate, @"\b(?:Jan(?:\.|uary)?|Feb(?:\.|ruary)?|Mar(?:\.|ch)?|Apr(?:\.|il)?|May|Jun(?:\.|e)?|Jul(?:\.|y)?|Aug(?:\.|ust)?|Sep(?:\.|tember)?|Oct(?:\.|ober)?|Nov(?:\.|ember)?|Dec(?:\.|ember)?)\s\d{1,2}(?:\s*-\s*\d{1,2})?\b", RegexOptions.IgnoreCase);
 
-        // Split the text based on the date range splitter sign
-        List<string> dateSplitByRange = rawDate.Split("-").ToList();
+        // Add all match values to a list
+        List<string> dates = new();
 
-        // Check for case where a different kind of dash is used
-        if(dateSplitByRange.Count == 1)
+        foreach(Match match in regexMatches)
         {
-            dateSplitByRange = rawDate.Split("‐").ToList();
+            // Add with periods removed to standardize formatting
+            dates.Add(Regex.Replace(match.Value, @"\.", string.Empty));
         }
 
-        // Check the case where days of the week is formatted with a dash (e.g. mon-fri)
-        if(dateSplitByRange.Count == 3)
+        // If date is formatted as "Month Day - day", split it and add extra date to list
+        bool dateIsOneMonthRange = dates.Count > 0 && (dates[0].Contains("-") || dates[0].Contains("-"));
+
+        if (dateIsOneMonthRange)
         {
-            dateSplitByRange.RemoveAt(0);
-        }
+            // Split the text based on the date range splitter sign
+            List<string> splitValues = dates[0].Split("-").ToList();
 
-        // Format the day of the week out of the value
-        string formattedFirstDate = Regex.Replace(dateSplitByRange[0], @"^.*,", string.Empty).Trim();
-
-        // Date is formatted as "Month Day", split it and store result
-        string month = formattedFirstDate.Split(" ")[0];
-        string day = formattedFirstDate.Split(" ")[1];
-
-        // Remove value we already checked for simplicity
-        dateSplitByRange.RemoveAt(0);
-
-        startDate = ParseDateValues(day, month, year);
-
-        // If there are still values in the list, then the date is a range
-        if (dateSplitByRange.Count > 0)
-        {
-            // Check for the case where the date is formatted as "Month Day - day"
-            if (int.TryParse(dateSplitByRange[0].Trim(), out _))
+            // Check for case where a different kind of dash is used
+            if (splitValues.Count == 1)
             {
-                dateSplitByRange[0] =  startDate.ToString("MMMM") + " " + dateSplitByRange[0];
+                splitValues = dates[0].Split("‐").ToList();
             }
 
-            // Format the day of the week out of the value
-            formattedFirstDate = Regex.Replace(dateSplitByRange[0], @"^.*,", string.Empty).Trim();
+            // Remove old value from list
+            dates.RemoveAt(0);
 
-            // Set the end date value
-            month = formattedFirstDate.Split(" ")[0];
-            day = formattedFirstDate.Split(" ")[1];
-            endDate = ParseDateValues(day, month, year);
+            // Add back first part since its a valid date
+            dates.Add(splitValues[0].Trim());
 
-            // If month of end date is before month of start date, year must be different
-            if(endDate.Month < startDate.Month)
-            {
-                endDate = endDate.AddYears(1);
-            }
+            // Add second part as a separate date by grabbing month from first value
+            string newSecondDate = splitValues[0].Split(" ")[0] + " " + splitValues[1].Trim();
+            dates.Add(newSecondDate);
         }
-        else
+
+        // Define day and month strings out here so they can be seamlessly used in both cases
+        string dayStr;
+        string monthStr;
+
+        // Use switch on count of dates to determine how to parse output
+        switch (dates.Count)
         {
-            // Case of single day event, set end date identical to start date
-            endDate = startDate;
+            default:
+                // Invalid date, return default dates
+                startDate = new();
+                endDate = new();
+                break;
+            case 1:
+                // Separate and parse date
+                SeparateRawDate(dates[0], out dayStr, out monthStr);
+                startDate = ParseDateValues(dayStr, monthStr, year);
+
+                // Case of single day event, set end date identical to start date
+                endDate = startDate;
+
+                break;
+            case 2:
+                // Separate and parse date
+                SeparateRawDate(dates[0], out dayStr, out monthStr);
+                startDate = ParseDateValues(dayStr, monthStr, year);
+
+                // Case of multi-day event, separate and parse end date
+                dates.RemoveAt(0);
+                SeparateRawDate(dates[0], out dayStr, out monthStr);
+                endDate = ParseDateValues(dayStr, monthStr, year);
+
+                // If month of end date is before month of start date, year must be different
+                if (endDate.Month < startDate.Month)
+                {
+                    endDate = endDate.AddYears(1);
+                }
+
+                break;
         }
+    }
+
+    /// <summary>
+    /// Separates a string like "October 12" into two strings, "October" and "12"
+    /// and stores them in the out parameters.
+    /// </summary>
+    /// <param name="combinedDate"> The combined date parameter (e.g october 12 or sep 2). </param>
+    /// <param name="dayStr"> The string which contains the day (e.g. 12 from oct 12). </param>
+    /// <param name="monthStr">The string which contains the day (e.g. oct from oct 12). </param>
+    private static void SeparateRawDate(string combinedDate, out string dayStr, out string monthStr)
+    {
+        monthStr = combinedDate.Split(" ")[0];
+        dayStr = combinedDate.Split(" ")[1];
     }
 
     /// <summary>
