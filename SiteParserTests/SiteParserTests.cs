@@ -25,12 +25,13 @@ using EventList;
 public class SiteParserTests
 {
     /// <summary>
-    /// Test the constructor doesn't throw an error when given a valid link.
+    /// Test the constructor gets through an entire valid site
+    /// without throwing an error when given a valid link.
     /// </summary>
     [TestMethod]
     public void TestConstructor_NoErrors()
     {
-        EventList list = SiteParser.ParseSite("https://registrar.utah.edu/academic-calendars/fall2024.php");
+        EventList list = SiteParser.ParseSite("https://registrar.utah.edu/academic-calendars/spring2024.php");
     }
 
     /// <summary>
@@ -40,5 +41,69 @@ public class SiteParserTests
     public void TestConstructor_FillsListWithProperValues()
     {
         EventList list = SiteParser.ParseSite("https://registrar.utah.edu/academic-calendars/fall2024.php");
+
+        /*
+         * Compare event table titles
+        */
+
+        // Expected
+        List<string> expectedTableList = [
+            "General Calendar Dates",
+            "Semester Length Classes",
+            "First Half Classes",
+            "Second Half Classes",
+            "Holidays"];
+
+        string expectedTableListStr = string.Join(", ", expectedTableList);
+
+        // Actual
+        var actualTableList = list.GetAllEventTables();
+
+        string actualTableListStr = string.Join(", ", actualTableList);
+
+        Assert.AreEqual(expectedTableListStr, actualTableListStr);
+
+        /*
+         * Compare event table values
+         */
+
+        // Expected
+        List<string> expectedEventTitles = [
+            "Labor Day",
+            "Fall Break",
+            "Thanksgiving Break",
+            "Holiday Recess"];
+
+        List<DateOnly> expectedEventStartDates = [
+            new DateOnly(2024,  9,  2),
+            new DateOnly(2024, 10,  6),
+            new DateOnly(2024, 11, 28),
+            new DateOnly(2024, 12, 14)];
+
+        List<DateOnly> expectedEventEndDates = [
+            new DateOnly(2024,  9,  2),
+            new DateOnly(2024, 10, 13),
+            new DateOnly(2024, 12,  1),
+            new DateOnly(2025,  1,  5)];
+
+        // Actual
+        list.GetEvents(
+            "Holidays",
+            out List<string> actualEventTitles,
+            out List<DateOnly> actualEventStartDates,
+            out List<DateOnly> actualEventEndDates);
+
+        // Assertions
+        Assert.AreEqual(
+            string.Join(", ", expectedEventTitles),
+            string.Join(", ", actualEventTitles) );
+
+        Assert.AreEqual(
+            string.Join(", ", expectedEventStartDates),
+            string.Join(", ", actualEventStartDates) );
+
+        Assert.AreEqual(
+            string.Join(", ", expectedEventEndDates),
+            string.Join(", ", actualEventEndDates) );
     }
 }

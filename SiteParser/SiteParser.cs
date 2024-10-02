@@ -58,7 +58,7 @@ public class SiteParser
         EventList list = new();
 
         // Setup web scraper
-        var web = new HtmlWeb();
+        HtmlWeb web = new HtmlWeb();
         HtmlDocument doc = web.Load(url);
 
         // Grab the year from the title of the document
@@ -91,6 +91,9 @@ public class SiteParser
     {
         // Get the title of the table
         string tableTitle = table.SelectSingleNode("caption").InnerText;
+
+        // Replace the non-breaking space HTML tag with a space
+        tableTitle = Regex.Replace(tableTitle, @"&nbsp;", " ");
 
         // Remove HTML entities from title
         tableTitle = Regex.Replace(tableTitle, @"&[a-zA-Z0-9#]+;", string.Empty);
@@ -147,6 +150,12 @@ public class SiteParser
 
         // Split the text based on the date range splitter sign
         List<string> dateSplitByRange = rawDate.Split("-").ToList();
+
+        // Check for case where a different kind of dash is used
+        if(dateSplitByRange.Count == 1)
+        {
+            dateSplitByRange = rawDate.Split("‐").ToList();
+        }
 
         // Check the case where days of the week is formatted with a dash (e.g. mon-fri)
         if(dateSplitByRange.Count == 3)
