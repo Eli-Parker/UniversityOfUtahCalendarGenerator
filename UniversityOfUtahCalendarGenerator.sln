@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35303.130
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventList", "EventList\EventList.csproj", "{C00207BA-367D-4412-8343-A62E010E3AA4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventList", "EventList\EventList.csproj", "{C00207BA-367D-4412-8343-A62E010E3AA4}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{4516E7E7-F029-48D2-A2F2-C2DDE55C739F}"
 	ProjectSection(SolutionItems) = preProject
@@ -11,11 +11,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventListTests", "EventListTests\EventListTests.csproj", "{792A50A2-A8BE-4C2F-BC25-8C9EF3B3C6D1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventListTests", "EventListTests\EventListTests.csproj", "{792A50A2-A8BE-4C2F-BC25-8C9EF3B3C6D1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SiteParser", "SiteParser\SiteParser.csproj", "{34595B81-744D-4379-94A9-325EB9B028B7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SiteParser", "SiteParser\SiteParser.csproj", "{34595B81-744D-4379-94A9-325EB9B028B7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SiteParserTests", "SiteParserTests\SiteParserTests.csproj", "{0AD742DB-0119-4C03-96E0-97BCB84A8233}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SiteParserTests", "SiteParserTests\SiteParserTests.csproj", "{0AD742DB-0119-4C03-96E0-97BCB84A8233}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalendarFileGenerator", "CalendarFileGenerator\CalendarFileGenerator.csproj", "{0BA5B0F2-4D06-4750-98D9-4383A12F9904}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{0AD742DB-0119-4C03-96E0-97BCB84A8233}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0AD742DB-0119-4C03-96E0-97BCB84A8233}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0AD742DB-0119-4C03-96E0-97BCB84A8233}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0BA5B0F2-4D06-4750-98D9-4383A12F9904}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0BA5B0F2-4D06-4750-98D9-4383A12F9904}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0BA5B0F2-4D06-4750-98D9-4383A12F9904}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0BA5B0F2-4D06-4750-98D9-4383A12F9904}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
