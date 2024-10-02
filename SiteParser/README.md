@@ -9,7 +9,7 @@ and uses a combination of HTML navigation and regular expressions to extract
 the date and time from the HTML document.
 
 
-### Acknowledgments 
+### Notes 
 
 I'd like to make note that some significant concessions were made here.
 This is a deterministic program which I recognize will break once the
