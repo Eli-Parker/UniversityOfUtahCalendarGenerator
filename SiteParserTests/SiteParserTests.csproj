@@ -30,7 +30,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SiteParser\SiteParser.csproj" />
-    <ProjectReference Include="..\WebsiteParser\EventList.csproj" />
+    <ProjectReference Include="..\EventList\EventList.csproj" />
   </ItemGroup>
 
   <ItemGroup>

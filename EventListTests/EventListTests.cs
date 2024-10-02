@@ -3,7 +3,7 @@
 // </copyright>
 // Implementation written by Eli Parker
 // Date: 10/1/24
-namespace WebsiteParserTests;
+namespace EventListTests;
 
 using EventList;
 using System.Collections.Generic;
