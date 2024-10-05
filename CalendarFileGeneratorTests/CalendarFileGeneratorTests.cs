@@ -45,6 +45,8 @@ public class CalendarFileGeneratorTests
             Summary = "Test Event",
             Start   = new CalDateTime(2024, 10, 3),
             End     = new CalDateTime(2024, 10, 4),
+            IsAllDay = true,
+            Transparency = TransparencyType.Transparent,
         };
         expectedCal.Events.Add(expectedEvent);
 
@@ -125,12 +127,16 @@ public class CalendarFileGeneratorTests
             Summary = "Event 1",
             Start   = new CalDateTime(2024, 10, 3),
             End     = new CalDateTime(2024, 10, 5),
+            IsAllDay = true,
+            Transparency = TransparencyType.Transparent,
         });
         expectedCal.Events.Add(new CalendarEvent
         {
             Summary = "Event 2",
             Start   = new CalDateTime(2024, 10, 4),
             End     = new CalDateTime(2024, 10, 6),
+            IsAllDay = true,
+            Transparency = TransparencyType.Transparent,
         });
 
         // Actual
@@ -171,15 +177,19 @@ public class CalendarFileGeneratorTests
         Calendar expectedCal = new();
         CalendarEvent expectedEvent1 = new()
         {
+            Summary = "Test Event1",
             Start = new CalDateTime(2024, 10, 3),
             End = new CalDateTime(2024, 10, 4),
-            Summary = "Test Event1",
+            IsAllDay = true,
+            Transparency = TransparencyType.Transparent,
         };
         CalendarEvent expectedEvent2 = new()
         {
+            Summary = "Test Event2",
             Start = new CalDateTime(2024, 10, 5),
             End = new CalDateTime(2024, 10, 6),
-            Summary = "Test Event2",
+            IsAllDay = true,
+            Transparency = TransparencyType.Transparent,
         };
         expectedCal.Events.Add(expectedEvent1);
         expectedCal.Events.Add(expectedEvent2);

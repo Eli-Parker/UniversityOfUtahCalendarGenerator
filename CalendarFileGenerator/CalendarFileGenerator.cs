@@ -14,6 +14,11 @@ using Ical.Net.CalendarComponents;
 /// <summary>
 /// A class which can generate iCal files from the given
 /// calendar events.
+/// <para>
+/// All calendar events are formatted so that they are
+/// transparent (don't show as busy on calendar) and are
+/// happening all day.
+/// </para>
 /// </summary>
 public class CalendarFileGenerator
 {
@@ -82,9 +87,11 @@ public class CalendarFileGenerator
 
         cal.Events.Add(new CalendarEvent
         {
-            Summary = eventName,
-            Start   = new CalDateTime(startDate.Year, startDate.Month, startDate.Day),
-            End     = new CalDateTime(endDate.Year, endDate.Month, endDate.Day),
+            Summary      = eventName,
+            Start        = new CalDateTime(startDate.Year, startDate.Month, startDate.Day),
+            End          = new CalDateTime(endDate.Year, endDate.Month, endDate.Day),
+            IsAllDay     = true,
+            Transparency = TransparencyType.Transparent,
         });
     }
 }
