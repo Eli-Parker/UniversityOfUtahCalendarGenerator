@@ -11,6 +11,7 @@ using Ical.Net.CalendarComponents;
 using Ical.Net.DataTypes;
 using Ical.Net.Serialization;
 using System.Text;
+using System.Text.RegularExpressions;
 
 /// <summary>
 /// Contains a robust test suite for <see cref="CalendarFileGenerator"/>.
@@ -41,17 +42,21 @@ public class CalendarFileGeneratorTests
         Calendar expectedCal = new();
         CalendarEvent expectedEvent = new()
         {
-            Start = new CalDateTime(2024, 10, 3),
-            End = new CalDateTime(2024, 10, 4),
             Summary = "Test Event",
+            Start   = new CalDateTime(2024, 10, 3),
+            End     = new CalDateTime(2024, 10, 4),
         };
         expectedCal.Events.Add(expectedEvent);
-        byte[] expectedFile = SerializeCalendar(expectedCal);
 
         // Actual
         byte[] actualFile = c.GetCalendarFile();
+        string actualFileStr   =   GetStringFromBytes(actualFile);
 
-        CollectionAssert.AreEqual(expectedFile, actualFile);
+        // Expected
+        byte[] expectedFile = Encoding.UTF8.GetBytes(new CalendarSerializer().SerializeToString(expectedCal));
+        string expectedFileStr = GetStringFromBytes(expectedFile);
+
+        Assert.AreEqual(expectedFileStr, actualFileStr);
     }
 
     /// <summary>
@@ -65,12 +70,16 @@ public class CalendarFileGeneratorTests
 
         // Expected
         Calendar expectedCal = new();
-        byte[] expectedFile = SerializeCalendar(expectedCal);
 
         // Actual
         byte[] actualFile = c.GetCalendarFile();
+        string actualFileStr = GetStringFromBytes(actualFile);
 
-        CollectionAssert.AreEqual(expectedFile, actualFile);
+        // Expected
+        byte[] expectedFile = Encoding.UTF8.GetBytes(new CalendarSerializer().SerializeToString(expectedCal));
+        string expectedFileStr = GetStringFromBytes(expectedFile);
+
+        Assert.AreEqual(expectedFileStr, actualFileStr);
     }
 
     /// <summary>
@@ -124,12 +133,15 @@ public class CalendarFileGeneratorTests
             End     = new CalDateTime(2024, 10, 6),
         });
 
-        byte[] expectedFile = SerializeCalendar(expectedCal);
-
         // Actual
         byte[] actualFile = c.GetCalendarFile();
+        string actualFileStr = GetStringFromBytes(actualFile);
 
-        CollectionAssert.AreEqual(expectedFile, actualFile);
+        // Expected
+        byte[] expectedFile = Encoding.UTF8.GetBytes(new CalendarSerializer().SerializeToString(expectedCal));
+        string expectedFileStr = GetStringFromBytes(expectedFile);
+
+        Assert.AreEqual(expectedFileStr, actualFileStr);
     }
 
     /// <summary>
@@ -171,15 +183,16 @@ public class CalendarFileGeneratorTests
         };
         expectedCal.Events.Add(expectedEvent1);
         expectedCal.Events.Add(expectedEvent2);
-        byte[] expectedFile = SerializeCalendar(expectedCal);
 
-        /*
-         * Actual
-         */
-
+        // Actual
         byte[] actualFile = c.GetCalendarFile();
+        string actualFileStr = GetStringFromBytes(actualFile);
 
-        CollectionAssert.AreEqual(expectedFile, actualFile);
+        // Expected
+        byte[] expectedFile = Encoding.UTF8.GetBytes(new CalendarSerializer().SerializeToString(expectedCal));
+        string expectedFileStr = GetStringFromBytes(expectedFile);
+
+        Assert.AreEqual(expectedFileStr, actualFileStr);
     }
 
     /// <summary>
@@ -193,7 +206,7 @@ public class CalendarFileGeneratorTests
     /// </remarks>
     /// </summary>
     [TestMethod]
-    public void TestCalendarFile_GenerateFile()
+    public void TestCalendarFile_CanGenerateFile()
     {
         // Setup
         CalendarFileGenerator c = new();
@@ -201,7 +214,7 @@ public class CalendarFileGeneratorTests
 
         // Generate the file
         byte[] calendarFile = c.GetCalendarFile();
-        string outputDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "TestResults");
+        string outputDirectory = Path.Combine("C:\\Users\\EliParker\\source\\repos\\Eli-Parker\\UniversityOfUtahCalendarGenerator\\", "TestResults");
         Directory.CreateDirectory(outputDirectory);
         string filePath = Path.Combine(outputDirectory, "TestCalendar.ics");
 
@@ -221,16 +234,24 @@ public class CalendarFileGeneratorTests
 
     /// <summary>
     /// <para>
-    /// Private helper method which serializes and returns a calendar object converted to a byte array.
+    /// Private helper method which serializes the calendar object and removes all unique identifiers.
+    /// This is done because two calendar files with unique identifiers
+    /// will not be equal, even if they are the same in terms of data.
     /// </para>
     /// <remarks>
     /// This method helps make cleaner and more readable test code.
     /// </remarks>
     /// </summary>
-    /// <param name="cal"> The calendar object. </param>
-    /// <returns> A byte array which contained the content of the iCal file.</returns>
-    private static byte[] SerializeCalendar(Calendar cal)
+    /// <param name="file"> The array of bytes to process and remove identifiers from. </param>
+    /// <returns> A string which is the iCal file without any unique identifiers present.</returns>
+    private static string GetStringFromBytes(byte[] file)
     {
-        return Encoding.UTF8.GetBytes(new CalendarSerializer().SerializeToString(cal));
+        // Grab string
+        string fileStr = Encoding.UTF8.GetString(file);
+
+        // Remove unique identifiers from file
+        fileStr = Regex.Replace(fileStr, @"UID:.*?\n", string.Empty);
+
+        return fileStr;
     }
 }
