@@ -17,7 +17,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SiteParser", "SiteParser\Si
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SiteParserTests", "SiteParserTests\SiteParserTests.csproj", "{0AD742DB-0119-4C03-96E0-97BCB84A8233}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalendarFileGenerator", "CalendarFileGenerator\CalendarFileGenerator.csproj", "{0BA5B0F2-4D06-4750-98D9-4383A12F9904}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CalendarFileGenerator", "CalendarFileGenerator\CalendarFileGenerator.csproj", "{0BA5B0F2-4D06-4750-98D9-4383A12F9904}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalendarFileGeneratorTests", "CalendarFileGeneratorTests\CalendarFileGeneratorTests.csproj", "{FEB59B6F-8969-4C41-8AF8-4F16D506FB0E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{0BA5B0F2-4D06-4750-98D9-4383A12F9904}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0BA5B0F2-4D06-4750-98D9-4383A12F9904}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0BA5B0F2-4D06-4750-98D9-4383A12F9904}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FEB59B6F-8969-4C41-8AF8-4F16D506FB0E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FEB59B6F-8969-4C41-8AF8-4F16D506FB0E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FEB59B6F-8969-4C41-8AF8-4F16D506FB0E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FEB59B6F-8969-4C41-8AF8-4F16D506FB0E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

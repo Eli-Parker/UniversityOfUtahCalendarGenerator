@@ -35,6 +35,7 @@ to import it into their calendar of choice!
 ## Project READMEs
 - [SiteParser README](./SiteParser/README.md)
 - [EventList README](./EventList/README.md)
+- [CalendarFileGenerator README](./CalendarFileGenerator/README.md)
 
 
 ## Installation

@@ -3,11 +3,20 @@
 
 ### Description
 
-TODO description
+This class is responsible for generating a calendar file that can be imported into most calendar applications.
+It handles the creation of the file and the addition of events to the file, so that way all the front-end
+has to do is construct the file from bytes and send it to the user.
 
 ### Notes 
 
-TODO notes
+An implementation consideration I made was this: *Why have `EventList` if this can store the events*? 
+
+The EventList class is very useful here because it allows us to pick and choose events based on user preferences.
+Why would we build the full calendar file, then remove events from it individually? It would be much more efficient
+to only add the events we want to the calendar file in the first place, and that's the purpose of EventList class.
+
+It would also be difficult to group events by which table they came from if we only had the calendar class
+(which was one of the main design points I wanted for the program). 
 
 ## Table of Contents
 - [Solution README](../README.md)
@@ -19,11 +28,31 @@ TODO notes
 
 ## Usage
 
-TODO Usage
+- Make a new instance of the Calendar class:
+
+```csharp
+var calendar = new Calendar();
+```
+
+- Add Events to the calendar file:
+
+```csharp
+calendar.AddCalendarEvent("Jack's Birthday", new DateOnly(...), new DateOnly(...));
+//                          [Event Name]        [Start Date]        [End Date]
+```
+
+- Export the calendar file:
+
+```csharp
+byte[] icalFileBytes = calendar.ExportCalendarFile();
+```
+
 
 ## Features
 
-TODO Features
+- Create a calendar file that can be imported into most calendar applications
+- Add events to the calendar file
+- Export the calendar file as a byte array
 
 ## Contributing
 
@@ -38,4 +67,4 @@ or shoot me an email at <racecar47@icloud.com>
 
 ## Acknowledgments
 
-TODO acknowledgments
+Thanks to the people who created the `iCal.Net` library, which this project would've been extremely hard to create without.
