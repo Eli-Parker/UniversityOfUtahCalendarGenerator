@@ -8,11 +8,11 @@ dates to my calendar, so as a software engineer I decided to implement a fix for
 Using the knowledge I've gained both from half a decade of software engineering practice and schooling from the Computer Science program here at the University of Utah,
 I made a C# application which scrapes the university's websites to generate CUSTOM .ics links for the students here!
 
-**Note that this program is not finished currently, still a WIP, but this denotes the current plan for the final.**
+**Note that this program is still a WIP, but this outlines the current plan for the final build.**
 
 ### The Program Idea
 
-The program, works as follows:
+The program, as I currently see it, works as follows:
 
 1. **Grabbing Site Data:** The user selects from a drop-down of semesters or inputs a website URL which is the semester schedule for the university.
 All university schedules from 2019-2024 are formatted exactly the same, so as long as the formatting doesn't change they can input any link for their semester
@@ -21,8 +21,7 @@ All university schedules from 2019-2024 are formatted exactly the same, so as lo
 This gives the user control over which events they care about. For example, a student could want to know when all the breaks
 are and when they can register for the next semester, but they don't want to know about the last day to drop classes. This program gives the user that flexibility.
 
-3. **Export of Event Data:** An .ics file is generated with the events they selected, and they can simply click a button or download the file 
-to import it into their calendar of choice!
+3. **Export of Event Data:** An .ics file is generated with the events they selected, and they can simply click a button or download the file to import it into their calendar of choice!
 
 ## Table of Contents
 - [Installation](#installation)
