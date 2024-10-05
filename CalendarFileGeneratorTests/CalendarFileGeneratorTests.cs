@@ -221,6 +221,8 @@ public class CalendarFileGeneratorTests
         // Setup
         CalendarFileGenerator c = new();
         c.AddCalendarEvent("Test Event", new DateOnly(2024, 10, 3), new DateOnly(2024, 10, 4));
+        c.AddCalendarEvent("Test Event", new DateOnly(2024, 10, 5), new DateOnly(2024, 10, 10));
+        c.AddCalendarEvent("Test Event", new DateOnly(2024, 10, 3), new DateOnly(2024, 10, 5));
 
         // Generate the file
         byte[] calendarFile = c.GetCalendarFile();

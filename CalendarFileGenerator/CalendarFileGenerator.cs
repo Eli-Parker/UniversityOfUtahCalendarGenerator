@@ -51,7 +51,8 @@ public class CalendarFileGenerator
 
     /// <summary>
     /// <para>
-    /// Adds a new event to the calendar file.
+    /// Adds a new event to the calendar file, with the
+    /// given start date (inclusive) and end date (exclusive).
     /// </para>
     /// <para>
     /// Note that empty strings are not allowed for the event name,
