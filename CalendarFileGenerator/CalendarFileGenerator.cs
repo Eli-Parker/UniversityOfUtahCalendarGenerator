@@ -43,12 +43,18 @@ public class CalendarFileGenerator
     }
 
     /// <summary>
+    /// <para>
     /// Adds a new event to the calendar file.
+    /// </para>
+    /// <para>
+    /// Note that empty strings are not allowed for the event name,
+    /// and the start time must be before the end time.
+    /// </para>
     /// </summary>
     /// <param name="eventName"> The name of the event, as it should appear on the calendar. </param>
-    /// <param name="startTime"> The start time of the event, as it should appear on the calendar. </param>
-    /// <param name="endTime"> The end time of the event, as it should appear on the calendar. </param>
-    /// <returns> True if the calendar was changed as a result of adding the event, false otherwise. </returns>
+    /// <param name="startTime"> The start time of the event, as it should appear on the calendar. This time must come BEFORE the <paramref name="endTime"/>. </param>
+    /// <param name="endTime"> The end time of the event, as it should appear on the calendar. This time must come AFTER the <paramref name="startTime"/>. </param>
+    /// <returns> True if the calendar was changed as a result of adding the event, false the calendar file wasn't changed (if the name or date range is invalid). </returns>
     public bool AddCalendarEvent(string eventName, DateOnly startTime, DateOnly endTime)
     {
         return false;
