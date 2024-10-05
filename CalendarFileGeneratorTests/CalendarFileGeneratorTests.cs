@@ -35,7 +35,7 @@ public class CalendarFileGeneratorTests
     {
         // Setup
         CalendarFileGenerator c = new();
-        Assert.IsTrue(c.AddCalendarEvent("Test Event", new DateOnly(2024, 10, 3), new DateOnly(2024, 10, 4)));
+        c.AddCalendarEvent("Test Event", new DateOnly(2024, 10, 3), new DateOnly(2024, 10, 4));
 
         // Expected
         Calendar expectedCal = new();
@@ -77,26 +77,59 @@ public class CalendarFileGeneratorTests
     /// Test that an empty string is NOT added as an event to the calendar file.
     /// </summary>
     [TestMethod]
-    public void TestAddEvent_EmptyStringEvent()
+    [ExpectedException(typeof(ArgumentException))]
+    public void TestAddEvent_EmptyStringEvent_IsInvalid()
     {
         CalendarFileGenerator c = new();
-        Assert.IsFalse(c.AddCalendarEvent(string.Empty, new DateOnly(2024, 10, 3), new DateOnly(2024, 10, 4)));
+        c.AddCalendarEvent(string.Empty, new DateOnly(2024, 10, 3), new DateOnly(2024, 10, 4));
     }
 
     /// <summary>
     /// Test that adding an event with an invalid date range returns false.
     /// </summary>
     [TestMethod]
+    [ExpectedException(typeof(ArgumentException))]
     public void TestCalendarFile_FalseForInvalidEvent()
     {
         // Setup
         CalendarFileGenerator c = new();
 
         // Add invalid event
-        bool successfulAdd = c.AddCalendarEvent("Invalid Event", new DateOnly(2024, 10, 5), new DateOnly(2024, 10, 4));
+        c.AddCalendarEvent("Invalid Event", new DateOnly(2024, 10, 5), new DateOnly(2024, 10, 4));
+    }
 
-        // Test that the add was unsuccessful
-        Assert.IsFalse(successfulAdd);
+    /// <summary>
+    /// Test that overlapping events are handled correctly.
+    /// </summary>
+    [TestMethod]
+    public void TestCalendarFile_OverlappingEvents()
+    {
+        // Setup
+        CalendarFileGenerator c = new();
+        c.AddCalendarEvent("Event 1", new DateOnly(2024, 10, 3), new DateOnly(2024, 10, 5));
+        c.AddCalendarEvent("Event 2", new DateOnly(2024, 10, 4), new DateOnly(2024, 10, 6));
+
+        // Expected
+        Calendar expectedCal = new();
+        expectedCal.Events.Add(new CalendarEvent
+        {
+            Summary = "Event 1",
+            Start   = new CalDateTime(2024, 10, 3),
+            End     = new CalDateTime(2024, 10, 5),
+        });
+        expectedCal.Events.Add(new CalendarEvent
+        {
+            Summary = "Event 2",
+            Start   = new CalDateTime(2024, 10, 4),
+            End     = new CalDateTime(2024, 10, 6),
+        });
+
+        byte[] expectedFile = SerializeCalendar(expectedCal);
+
+        // Actual
+        byte[] actualFile = c.GetCalendarFile();
+
+        CollectionAssert.AreEqual(expectedFile, actualFile);
     }
 
     /// <summary>
@@ -111,16 +144,13 @@ public class CalendarFileGeneratorTests
          */
 
         CalendarFileGenerator c = new();
-        Assert.IsTrue(c.AddCalendarEvent("Test Event1", new DateOnly(2024, 10, 3), new DateOnly(2024, 10, 4)));
+        c.AddCalendarEvent("Test Event1", new DateOnly(2024, 10, 3), new DateOnly(2024, 10, 4));
 
-        // Add invalid event
-        bool successfulAdd = c.AddCalendarEvent("Invalid Event", new DateOnly(2024, 10, 5), new DateOnly(2024, 10, 4));
-
-        // Test that the add was unsuccessful
-        Assert.IsFalse(successfulAdd);
+        // Add invalid event and ensure it throws an exception
+        Assert.ThrowsException<ArgumentException>( () => c.AddCalendarEvent("Invalid Event", new DateOnly(2024, 10, 5), new DateOnly(2024, 10, 4)));
 
         // Add another event to make sure you can add events after an invalid event
-        Assert.IsTrue(c.AddCalendarEvent("Test Event2", new DateOnly(2024, 10, 5), new DateOnly(2024, 10, 6)));
+        c.AddCalendarEvent("Test Event2", new DateOnly(2024, 10, 5), new DateOnly(2024, 10, 6));
 
         /*
          * Expected

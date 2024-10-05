@@ -7,7 +7,9 @@ namespace CalendarFileGenerator;
 
 using System.Text;
 using Ical.Net;
+using Ical.Net.DataTypes;
 using Ical.Net.Serialization;
+using Ical.Net.CalendarComponents;
 
 /// <summary>
 /// A class which can generate iCal files from the given
@@ -37,8 +39,8 @@ public class CalendarFileGenerator
     /// <returns> An array of bytes which contains the contents of the .ics file encoded in UTF8. </returns>
     public byte[] GetCalendarFile()
     {
-        var serializer = new CalendarSerializer();
-        var serializedCalendar = serializer.SerializeToString(cal);
+        CalendarSerializer serializer = new();
+        string serializedCalendar = serializer.SerializeToString(cal);
         return Encoding.UTF8.GetBytes(serializedCalendar);
     }
 
@@ -48,16 +50,41 @@ public class CalendarFileGenerator
     /// </para>
     /// <para>
     /// Note that empty strings are not allowed for the event name,
-    /// and the start time must be before the end time.
+    /// and the start date must be before the end date. Both of these
+    /// errors will throw an <see cref="ArgumentException"/>.
     /// </para>
     /// </summary>
-    /// <param name="eventName"> The name of the event, as it should appear on the calendar. </param>
-    /// <param name="startTime"> The start time of the event, as it should appear on the calendar. This time must come BEFORE the <paramref name="endTime"/>. </param>
-    /// <param name="endTime"> The end time of the event, as it should appear on the calendar. This time must come AFTER the <paramref name="startTime"/>. </param>
-    /// <returns> True if the calendar was changed as a result of adding the event, false the calendar file wasn't changed (if the name or date range is invalid). </returns>
-    public bool AddCalendarEvent(string eventName, DateOnly startTime, DateOnly endTime)
+    /// <param name="eventName"> The name of the event, as it should appear on the calendar. This parameter cannot be empty or whitespace. </param>
+    /// <param name="startDate"> The start date of the event, as it should appear on the calendar. This date must come before or be equal to the <paramref name="endDate"/>. </param>
+    /// <param name="endDate"> The end date of the event, as it should appear on the calendar. This date must come after or be equal to the <paramref name="startDate"/>. </param>
+    /// <exception cref="ArgumentException"> Thrown when the <paramref name="eventName"/> is empty or whitespace, or when the <paramref name="startDate"/> comes after the <paramref name="endDate"/>. </exception>
+    public void AddCalendarEvent(string eventName, DateOnly startDate, DateOnly endDate)
     {
-        return false;
-        // TODO IMPLEMENT ME
+        /*
+         * Invalid Event Checks
+         */
+
+        // Check for invalid event name
+        if (string.IsNullOrWhiteSpace(eventName))
+        {
+            throw new ArgumentException($"Event name {eventName} cannot be empty or whitespace.");
+        }
+
+        // Check for bad date range
+        if (startDate > endDate)
+        {
+            throw new ArgumentException($"Event start date ({startDate}) cannot come after end date ({endDate}).");
+        }
+
+        /*
+         * Add event
+         */
+
+        cal.Events.Add(new CalendarEvent
+        {
+            Summary = eventName,
+            Start   = new CalDateTime(startDate.Year, startDate.Month, startDate.Day),
+            End     = new CalDateTime(endDate.Year, endDate.Month, endDate.Day),
+        });
     }
 }
