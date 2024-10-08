@@ -58,4 +58,38 @@ public class CalendarController
         // Return result
         return resultDictionary;
     }
+
+    /// <summary>
+    /// Get the calendar file from the selected list of events.
+    /// </summary>
+    /// <param name="events"> The list of event names which we want added to the calendar file. </param>
+    /// <returns> A byte array which contains the data for a .ics file. </returns>
+    public byte[] GetCalendarFileFromSelected(List<string> events)
+    {
+        // Make a new instance of the calendar file generator
+        CalendarFileGenerator calFileGen = new();
+
+        // For every table in the EventList
+        foreach (string table in list.GetAllEventTables())
+        {
+            // Call GetEvents and store it to list
+            List<string> tableEventNames;
+            List<DateOnly> startDates;
+            List<DateOnly> endDates;
+
+            list.GetEvents(table, out tableEventNames, out startDates, out endDates);
+
+            // Add those lists to the calendar file generator minus the events which aren't contained in the selection
+            for (int i = 0; i < tableEventNames.Count; i++)
+            {
+                if(events.Contains(tableEventNames[i]))
+                {
+                    calFileGen.AddCalendarEvent(tableEventNames[i], startDates[i], endDates[i]);
+                }
+            }
+        }
+
+        // Return final value
+        return calFileGen.GetCalendarFile();
+    }
 }
