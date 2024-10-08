@@ -8,14 +8,19 @@ namespace UofUCalGen.Pages
     /// </summary>
     public class CheckBoxListExtBase : ComponentBase
     {
-        public List<string> EventList { get; set; }
+        public List<string> Tables { get; set; }
+        public Dictionary<string, List<string>> EventList { get; set; }
 
         protected List<string> SelectedIds = new List<string>();
         public string SelectedEvents { get; set; }
         protected override void OnInitialized()
         {
-            EventList = ["Fall break", "Spring break", "Christmas"];
+            EventList = new();
+            EventList.Add("t1", new List<string> { "e1", "e2", "e3" });
+            EventList.Add("t2", new List<string> { "e4", "e5", "e6" });
+            EventList.Add("t3", new List<string> { "e7", "e8", "e9" });
             SelectedEvents = string.Empty;
+            Tables = ["t1", "t2", "t3"];
         }
 
         protected void ShowSelectedValues()

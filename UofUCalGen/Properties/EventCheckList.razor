@@ -23,34 +23,49 @@
 @code {
     //Data for the Checkbox
     [Parameter] public IEnumerable<TItem> Data { get; set; }
+
     // The field to be shown adjacent to checkbox
     [Parameter] public Func<TItem, string> TextField { get; set; }
+
     // The Value which checkbox will return when checked
     [Parameter] public Func<TItem, object> ValueField { get; set; }
+
     // CSS Style for the Checkbox container
     [Parameter] public string Style { get; set; }
-    // Any childd content for the control (if needed)
+
+    // Any child content for the control (if needed)
     [Parameter] public RenderFragment ChildContent { get; set; }
-    // The array which contains the list of selected checkboxs
+
+    // The array which contains the list of selected checkboxes
     [Parameter] public List<string> SelectedValues { get; set; }
 
-    //Method to update the selected value on click on checkbox
-    public void CheckboxClicked(string aSelectedId, object aChecked)
+    /// <summary>
+    /// Updates the checkbox list based on which
+    /// checkbox was checked/unchecked.
+    /// </summary>
+    /// <param name="SelectedItemName"> The selected ID of the item. </param>
+    /// <param name="Checked"> A boolean which determines if the object is checked or not. </param>
+    public void CheckboxClicked(string SelectedItemName, object Checked)
     {
-        if ((bool)aChecked)
+        // If the object is checked, add it to the list of selected values
+        if ((bool)Checked)
         {
-            if (!SelectedValues.Contains(aSelectedId))
+            if (!SelectedValues.Contains(SelectedItemName))
             {
-                SelectedValues.Add(aSelectedId);
+                SelectedValues.Add(SelectedItemName);
             }
         }
+
+        // Otherwise, remove it from the list of selected values
         else
         {
-            if (SelectedValues.Contains(aSelectedId))
+            if (SelectedValues.Contains(SelectedItemName))
             {
-                SelectedValues.Remove(aSelectedId);
+                SelectedValues.Remove(SelectedItemName);
             }
         }
+
+        // Update the UI
         StateHasChanged();
     }
     }
