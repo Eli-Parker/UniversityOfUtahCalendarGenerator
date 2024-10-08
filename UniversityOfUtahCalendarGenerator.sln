@@ -19,11 +19,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SiteParserTests", "SitePars
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CalendarFileGenerator", "CalendarFileGenerator\CalendarFileGenerator.csproj", "{0BA5B0F2-4D06-4750-98D9-4383A12F9904}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalendarFileGeneratorTests", "CalendarFileGeneratorTests\CalendarFileGeneratorTests.csproj", "{FEB59B6F-8969-4C41-8AF8-4F16D506FB0E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CalendarFileGeneratorTests", "CalendarFileGeneratorTests\CalendarFileGeneratorTests.csproj", "{FEB59B6F-8969-4C41-8AF8-4F16D506FB0E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalendarController", "CalendarController\CalendarController.csproj", "{FD4EA22E-FBD2-4471-9A2C-552F0A228063}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CalendarController", "CalendarController\CalendarController.csproj", "{FD4EA22E-FBD2-4471-9A2C-552F0A228063}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UofUCalGen", "UofUCalGen\UofUCalGen.csproj", "{3E1AB3B1-C274-4E14-92F6-ACE2B74C5237}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UofUCalGen", "UofUCalGen\UofUCalGen.csproj", "{3E1AB3B1-C274-4E14-92F6-ACE2B74C5237}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
