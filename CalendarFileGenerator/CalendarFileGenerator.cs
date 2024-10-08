@@ -32,7 +32,7 @@ public class CalendarFileGenerator
     /// </summary>
     public CalendarFileGenerator()
     {
-        cal = new Calendar();
+        cal = new();
     }
 
     /// <summary>
@@ -79,7 +79,7 @@ public class CalendarFileGenerator
         // Check for bad date range
         if (startDate > endDate)
         {
-            throw new ArgumentException($"Event start date ({startDate}) cannot come after end date ({endDate}).");
+            throw new ArgumentException($"Event start date ({startDate}) MUST come before end date ({endDate}).");
         }
 
         /*

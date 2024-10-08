@@ -21,6 +21,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CalendarFileGenerator", "Ca
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalendarFileGeneratorTests", "CalendarFileGeneratorTests\CalendarFileGeneratorTests.csproj", "{FEB59B6F-8969-4C41-8AF8-4F16D506FB0E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalendarController", "CalendarController\CalendarController.csproj", "{FD4EA22E-FBD2-4471-9A2C-552F0A228063}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{FEB59B6F-8969-4C41-8AF8-4F16D506FB0E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FEB59B6F-8969-4C41-8AF8-4F16D506FB0E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FEB59B6F-8969-4C41-8AF8-4F16D506FB0E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FD4EA22E-FBD2-4471-9A2C-552F0A228063}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FD4EA22E-FBD2-4471-9A2C-552F0A228063}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FD4EA22E-FBD2-4471-9A2C-552F0A228063}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FD4EA22E-FBD2-4471-9A2C-552F0A228063}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -226,7 +226,8 @@ public class CalendarFileGeneratorTests
 
         // Generate the file
         byte[] calendarFile = c.GetCalendarFile();
-        string outputDirectory = Path.Combine("C:\\Users\\EliParker\\source\\repos\\Eli-Parker\\UniversityOfUtahCalendarGenerator\\", "TestResults");
+        string baseDir = AppDomain.CurrentDomain.BaseDirectory;
+        string outputDirectory = Path.Combine(baseDir, "TestResults");
         Directory.CreateDirectory(outputDirectory);
         string filePath = Path.Combine(outputDirectory, "TestCalendar.ics");
 

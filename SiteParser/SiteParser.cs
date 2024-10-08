@@ -49,6 +49,7 @@ public class SiteParser
     /// </summary>
     /// <param name="url"> The link to the University of Utah campus site. </param>
     /// <returns> An EventList object which contains all event on the given U of U Campus Site. </returns>
+    /// <exception cref="InvalidLinkException"> Is thrown if the given link is invalid. See <see cref="CheckURL(string)"/> for more info. </exception>
     public static EventList ParseSite(string url)
     {
         // Check if the URL is valid
@@ -80,7 +81,9 @@ public class SiteParser
         if(tables == null)
         {
             // No tables, link must be invalid or not exist
-            throw new InvalidLinkException("Invalid URL, check that provided URL goes to the right place. (Dev: URL has no table HTML attributes in HTMLdoc)");
+            throw new InvalidLinkException(
+                "Invalid URL, check that provided URL goes to the right place or that the site isn't down." +
+                " (Dev: URL has no table HTML attributes in HTMLdoc)");
         }
 
         // Loop through all tables
