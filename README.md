@@ -35,6 +35,7 @@ are and when they can register for the next semester, but they don't want to kno
 - [SiteParser README](./SiteParser/README.md)
 - [EventList README](./EventList/README.md)
 - [CalendarFileGenerator README](./CalendarFileGenerator/README.md)
+- [CalendarController README](./CalendarController/README.md)
 
 
 ## Installation

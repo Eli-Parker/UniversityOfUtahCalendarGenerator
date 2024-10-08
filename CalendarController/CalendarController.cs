@@ -24,6 +24,7 @@ public class CalendarController
     /// </para>
     /// </summary>
     /// <param name="calendarSite"> The site to grab the data from. </param>
+    /// <exception cref="InvalidLinkException"> Thrown when the given link is invalid. </exception>
     public CalendarController(string calendarSite)
     {
         // Initialize list

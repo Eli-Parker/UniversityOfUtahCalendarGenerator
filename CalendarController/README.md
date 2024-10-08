@@ -28,7 +28,23 @@ It was easier to reconstruct the Dictionary here, and return it to the view side
 - Make a new instance of the CalendarController class:
 
 ```csharp
-var ctlr = new CalendarController();
+var ctlr = new CalendarController("https://registrar.utah.edu/academic-calendars/fall2024.php");
+```
+
+- Get list of events to display to the user:
+
+```csharp
+Dictionary<string, List<string>> events = ctlr.GetEvents();
+```
+
+- Get the .ics file to download:
+
+```csharp
+List<string> selectedEvents = ...;
+
+byte[] calendarFile = ctlr.GetCalendarFileFromSelected( selectedEvents );
+
+// Process file and send file to user
 ```
 
 
@@ -51,3 +67,4 @@ or shoot me an email at <racecar47@icloud.com>
 
 ## Acknowledgments
 
+No acknowledgments at this time.
