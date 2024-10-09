@@ -1,9 +1,77 @@
 ﻿@page "/"
+@inject HttpClient Http
 
 <PageTitle>SiteSelector</PageTitle>
 
-<h3>Welcome! Please Copy and paste a link to the University of Utah Semester Calendar page or select a page from the dropdown.</h3>
+<MudThemeProvider IsDarkMode="true" Theme="_theme" />
+
+<MudPaper Class="pa-4 ma-16">
+    <MudText Typo="Typo.subtitle2">Welcome! Please Copy and paste a link to the University of Utah Semester Calendar page or select a page from the drop-down.</MudText>
+</MudPaper>
+
+@if (sites == null)
+{
+    <MudPaper Class="pa-4 ma-16">
+        <MudText Typo="Typo.subtitle2">Loading...</MudText>
+    </MudPaper>
+}
+else
+{
+    <MudPaper Class="pa-4 ma-16">
+        <!-- MudSelect component to display a drop-down list of semester calendar pages -->
+        <MudSelect Placeholder="Select Semester" @bind-Value="siteValue" HelperText="Semester" ToStringFunc="@tostringFunc" CloseIcon="@Icons.Material.Filled.Flag" AdornmentColor="Color.Tertiary"
+                        AnchorOrigin="Origin.CenterCenter" TransformOrigin="Origin.CenterCenter" Variant="Variant.Outlined">
+
+        @foreach (var site in sites)
+        {
+            <!-- Add all sites to the drop-down list -->
+            <MudSelectItem Value="@(site)" />
+        }
+        </MudSelect>
+    
+        <div class="d-flex mud-width-full align-center mt-8">
+            <MudText Typo="Typo.subtitle1" Class="mr-2">Selected value: </MudText>
+
+            <MudChip T="string" Color="Color.Secondary">@(siteValue?.name ?? "Select Semester")</MudChip>
+        </div>
+    </MudPaper>
+}
 
 @code {
+    // Theme
+    private MudTheme _theme = new()
+        {
+            PaletteLight = new PaletteLight(),
+            PaletteDark = new PaletteDark()
+            {
+                Primary = Colors.Gray.Darken3,
+                Secondary = Colors.Red.Darken3,
+                Tertiary = Colors.Red.Darken2,
+                Background = Colors.Gray.Darken4,
+                AppbarBackground = Colors.Red.Darken4,
+            },
 
+            LayoutProperties = new LayoutProperties()
+            {
+                DrawerWidthLeft = "0px",
+                DrawerWidthRight = "0px"
+            }
+        };
+
+    private Site siteValue { get; set; }
+    private Site[]? sites;
+
+    protected override async Task OnInitializedAsync()
+    {
+        sites = await Http.GetFromJsonAsync<Site[]>("preset-data/presetLinks.json");
+    }
+
+    public class Site
+    {
+        public string name { get; set; }
+
+        public string url { get; set; }
+    }
+
+    private Func<Site, string> tostringFunc = ci => ci.name;
 }
