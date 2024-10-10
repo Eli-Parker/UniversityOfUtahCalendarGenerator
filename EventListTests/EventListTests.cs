@@ -20,6 +20,16 @@ using System.Collections.Generic;
 [TestClass]
 public class EventListTests
 {
+    [TestMethod]
+    public void TestConstructor_JSON()
+    {
+        EventList list = new EventList();
+        list.AddEvent("table 1", "event 1", new DateOnly(2024, 12, 24), new DateOnly(2024, 12, 25));
+        list.AddEvent("table 1", "event 2", new DateOnly(2024, 12, 24), new DateOnly(2024, 12, 25));
+
+        list.ExportJSON();
+    }
+
     /// <summary>
     /// Test a basic valid case of adding two values with dates to two tables.
     /// </summary>

@@ -5,6 +5,7 @@
 // Date: 10/1/24
 
 using System.Diagnostics;
+using System.Text.Json;
 
 namespace EventList;
 
@@ -59,6 +60,28 @@ public class EventList
     public List<string> GetAllEventTables()
     {
         return events.Keys.ToList();
+    }
+
+    /// <summary>
+    /// Exports the current list of events to a JSON file.
+    /// </summary>
+    /// <param name="name"> The name of the file. </param>
+    /// <param name="filePath"> The specified file path to write the JSON file to. </param>
+    /// <exception cref="ArgumentException"> Thrown when the given directory does not exist. </exception>
+    public void ExportJSON(string name, string filePath)
+    {
+        // If the directory does not exist, throw exception
+        if (! Directory.Exists(filePath))
+        {
+            throw new ArgumentException("The given directory does not exist.");
+        }
+
+        // Make a JSON string from the events
+        string jsonString = JsonSerializer.Serialize(events, new JsonSerializerOptions { WriteIndented = true });
+
+        // Write file
+        filePath = Path.Combine(filePath, name + ".json");
+        File.WriteAllText(filePath, jsonString);
     }
 
     /// <summary>
@@ -160,6 +183,11 @@ public class EventList
             this.eventName = eventName;
             this.startDate = startDate;
             this.endDate   =   endDate;
+
+            // Set properties
+            Name = eventName;
+            StartDate = startDate;
+            EndDate = endDate;
         }
 
         /// <summary>
@@ -174,7 +202,17 @@ public class EventList
             this.eventName = eventName;
             this.startDate = eventDate;
             this.endDate   = eventDate;
+
+            Name = eventName;
+            StartDate = eventDate;
+            EndDate = eventDate;
         }
+
+        public string Name { get; set; }
+
+        public DateOnly StartDate { get; set; }
+
+        public DateOnly EndDate { get; set; }
 
         /// <summary>
         /// Gets the name for the Event object.
