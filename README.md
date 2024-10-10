@@ -36,6 +36,7 @@ are and when they can register for the next semester, but they don't want to kno
 - [EventList README](./EventList/README.md)
 - [CalendarFileGenerator README](./CalendarFileGenerator/README.md)
 - [CalendarController README](./CalendarController/README.md)
+- [UofUCalGen README](./UofUCalGen/README.md)
 
 
 ## Installation
