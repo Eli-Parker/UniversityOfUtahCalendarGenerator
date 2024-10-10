@@ -76,6 +76,12 @@ public class EventList
             throw new ArgumentException("The given directory does not exist.");
         }
 
+        // Delete old file if it exists
+        if (File.Exists(Path.Combine(filePath, name + ".json")))
+        {
+            File.Delete(Path.Combine(filePath, name + ".json"));
+        }
+
         // Make a JSON string from the events
         string jsonString = JsonSerializer.Serialize(events, new JsonSerializerOptions { WriteIndented = true });
 

@@ -1,0 +1,182 @@
+{
+  "General Calendar Dates": [
+    {
+      "Name": "Class schedule available",
+      "StartDate": "2025-02-03",
+      "EndDate": "2025-02-03"
+    },
+    {
+      "Name": "Registration dates available",
+      "StartDate": "2025-02-10",
+      "EndDate": "2025-02-10"
+    },
+    {
+      "Name": "Registration dates begin",
+      "StartDate": "2025-03-17",
+      "EndDate": "2025-03-17"
+    },
+    {
+      "Name": "Deadline to apply for graduation",
+      "StartDate": "2025-05-21",
+      "EndDate": "2025-05-21"
+    },
+    {
+      "Name": "Open enrollment",
+      "StartDate": "2025-04-07",
+      "EndDate": "2025-04-07"
+    },
+    {
+      "Name": "House Bill 60 registration",
+      "StartDate": "2025-05-05",
+      "EndDate": "2025-05-05"
+    },
+    {
+      "Name": "Tuition payment due",
+      "StartDate": "2025-05-21",
+      "EndDate": "2025-05-21"
+    },
+    {
+      "Name": "Census deadline",
+      "StartDate": "2025-06-02",
+      "EndDate": "2025-06-02"
+    },
+    {
+      "Name": "Gradesdue",
+      "StartDate": "2025-08-11",
+      "EndDate": "2025-08-11"
+    }
+  ],
+  "Semester Length Classes": [
+    {
+      "Name": "Classes begin",
+      "StartDate": "2025-05-12",
+      "EndDate": "2025-05-12"
+    },
+    {
+      "Name": "Last day to add without a permission code",
+      "StartDate": "2025-05-16",
+      "EndDate": "2025-05-16"
+    },
+    {
+      "Name": "Last day to wait list",
+      "StartDate": "2025-05-16",
+      "EndDate": "2025-05-16"
+    },
+    {
+      "Name": "Last day to add, drop (delete), elect CR/NC, or audit classes",
+      "StartDate": "2025-05-21",
+      "EndDate": "2025-05-21"
+    },
+    {
+      "Name": "Last day to withdraw from classes",
+      "StartDate": "2025-06-20",
+      "EndDate": "2025-06-20"
+    },
+    {
+      "Name": "Last day to reverse CR/NC option",
+      "StartDate": "2025-07-25",
+      "EndDate": "2025-07-25"
+    },
+    {
+      "Name": "Classes end",
+      "StartDate": "2025-07-30",
+      "EndDate": "2025-07-30"
+    },
+    {
+      "Name": "Reading day",
+      "StartDate": "0001-01-01",
+      "EndDate": "0001-01-01"
+    },
+    {
+      "Name": "Final exam period",
+      "StartDate": "2025-07-31",
+      "EndDate": "2025-08-01"
+    }
+  ],
+  "First Half Classes": [
+    {
+      "Name": "Classes begin",
+      "StartDate": "2025-05-12",
+      "EndDate": "2025-05-12"
+    },
+    {
+      "Name": "Last day to add, drop (delete), elect CR/NC, or audit classes",
+      "StartDate": "2025-05-15",
+      "EndDate": "2025-05-15"
+    },
+    {
+      "Name": "Last day to wait list",
+      "StartDate": "2025-05-15",
+      "EndDate": "2025-05-15"
+    },
+    {
+      "Name": "Last day to withdraw from classes",
+      "StartDate": "2025-05-30",
+      "EndDate": "2025-05-30"
+    },
+    {
+      "Name": "Last day to reverse CR/NC option",
+      "StartDate": "2025-06-13",
+      "EndDate": "2025-06-13"
+    },
+    {
+      "Name": "Classes end",
+      "StartDate": "2025-06-18",
+      "EndDate": "2025-06-18"
+    }
+  ],
+  "Second Half Classes": [
+    {
+      "Name": "Classes begin",
+      "StartDate": "2025-06-20",
+      "EndDate": "2025-06-20"
+    },
+    {
+      "Name": "Last day to add, drop (delete), elect CR/NC, or audit classes",
+      "StartDate": "2025-06-25",
+      "EndDate": "2025-06-25"
+    },
+    {
+      "Name": "Last day to wait list",
+      "StartDate": "2025-06-25",
+      "EndDate": "2025-06-25"
+    },
+    {
+      "Name": "Last day to withdraw from classes",
+      "StartDate": "2025-07-11",
+      "EndDate": "2025-07-11"
+    },
+    {
+      "Name": "Last day to reverse CR/NC option",
+      "StartDate": "2025-07-25",
+      "EndDate": "2025-07-25"
+    },
+    {
+      "Name": "Classes end",
+      "StartDate": "2025-07-30",
+      "EndDate": "2025-07-30"
+    }
+  ],
+  "Holidays": [
+    {
+      "Name": "Memorial Day holiday",
+      "StartDate": "2025-05-26",
+      "EndDate": "2025-05-26"
+    },
+    {
+      "Name": "Juneteenth (observed)",
+      "StartDate": "2025-06-16",
+      "EndDate": "2025-06-16"
+    },
+    {
+      "Name": "Independence Day holiday",
+      "StartDate": "2025-07-04",
+      "EndDate": "2025-07-04"
+    },
+    {
+      "Name": "Pioneer Day holiday (observed)",
+      "StartDate": "2025-07-24",
+      "EndDate": "2025-07-24"
+    }
+  ]
+}

@@ -3,6 +3,8 @@
 // </copyright>
 // Implementation written by Eli Parker
 // Date: 10/1/24
+// Ignore Spelling: JSON
+
 namespace EventListTests;
 
 using EventList;
@@ -20,6 +22,9 @@ using System.Collections.Generic;
 [TestClass]
 public class EventListTests
 {
+    /// <summary>
+    /// Test the JSON creation functionality of the EventList class.
+    /// </summary>
     [TestMethod]
     public void TestConstructor_JSON()
     {
@@ -27,7 +32,8 @@ public class EventListTests
         list.AddEvent("table 1", "event 1", new DateOnly(2024, 12, 24), new DateOnly(2024, 12, 25));
         list.AddEvent("table 1", "event 2", new DateOnly(2024, 12, 24), new DateOnly(2024, 12, 25));
 
-        list.ExportJSON();
+        string filepath = Environment.CurrentDirectory;
+        list.ExportJSON("table 1", filepath);
     }
 
     /// <summary>

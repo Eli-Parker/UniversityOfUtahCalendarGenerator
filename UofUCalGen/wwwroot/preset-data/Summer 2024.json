@@ -1,0 +1,182 @@
+{
+  "General Calendar Dates": [
+    {
+      "Name": "Class schedule available",
+      "StartDate": "2024-02-05",
+      "EndDate": "2024-02-05"
+    },
+    {
+      "Name": "Registration dates available",
+      "StartDate": "2024-02-12",
+      "EndDate": "2024-02-12"
+    },
+    {
+      "Name": "Registration dates begin",
+      "StartDate": "2024-03-11",
+      "EndDate": "2024-03-11"
+    },
+    {
+      "Name": "Deadline to apply for graduation",
+      "StartDate": "2024-05-22",
+      "EndDate": "2024-05-22"
+    },
+    {
+      "Name": "Open enrollment",
+      "StartDate": "2024-04-01",
+      "EndDate": "2024-04-01"
+    },
+    {
+      "Name": "House Bill 60 registration",
+      "StartDate": "2024-05-06",
+      "EndDate": "2024-05-06"
+    },
+    {
+      "Name": "Tuition payment due",
+      "StartDate": "2024-05-22",
+      "EndDate": "2024-05-22"
+    },
+    {
+      "Name": "Census deadline",
+      "StartDate": "2024-06-03",
+      "EndDate": "2024-06-03"
+    },
+    {
+      "Name": "Gradesdue",
+      "StartDate": "2024-08-12",
+      "EndDate": "2024-08-12"
+    }
+  ],
+  "Semester Length Classes": [
+    {
+      "Name": "Classes begin",
+      "StartDate": "2024-05-13",
+      "EndDate": "2024-05-13"
+    },
+    {
+      "Name": "Last day to add without a permission code",
+      "StartDate": "2024-05-17",
+      "EndDate": "2024-05-17"
+    },
+    {
+      "Name": "Last day to wait list",
+      "StartDate": "2024-05-17",
+      "EndDate": "2024-05-17"
+    },
+    {
+      "Name": "Last day to add, drop (delete), elect CR/NC, or audit classes",
+      "StartDate": "2024-05-22",
+      "EndDate": "2024-05-22"
+    },
+    {
+      "Name": "Last day to withdraw from classes",
+      "StartDate": "2024-06-21",
+      "EndDate": "2024-06-21"
+    },
+    {
+      "Name": "Last day to reverse CR/NC option",
+      "StartDate": "2024-07-26",
+      "EndDate": "2024-07-26"
+    },
+    {
+      "Name": "Classes end",
+      "StartDate": "2024-07-31",
+      "EndDate": "2024-07-31"
+    },
+    {
+      "Name": "Reading day",
+      "StartDate": "0001-01-01",
+      "EndDate": "0001-01-01"
+    },
+    {
+      "Name": "Final exam period",
+      "StartDate": "2024-08-01",
+      "EndDate": "2024-08-02"
+    }
+  ],
+  "First Half Classes": [
+    {
+      "Name": "Classes begin",
+      "StartDate": "2024-05-13",
+      "EndDate": "2024-05-13"
+    },
+    {
+      "Name": "Last day to add, drop (delete), elect CR/NC, or audit classes",
+      "StartDate": "2024-05-16",
+      "EndDate": "2024-05-16"
+    },
+    {
+      "Name": "Last day to wait list",
+      "StartDate": "2024-05-16",
+      "EndDate": "2024-05-16"
+    },
+    {
+      "Name": "Last day to withdraw from classes",
+      "StartDate": "2024-05-31",
+      "EndDate": "2024-05-31"
+    },
+    {
+      "Name": "Last day to reverse CR/NC option",
+      "StartDate": "2024-06-14",
+      "EndDate": "2024-06-14"
+    },
+    {
+      "Name": "Classes end",
+      "StartDate": "2024-06-20",
+      "EndDate": "2024-06-20"
+    }
+  ],
+  "Second Half Classes": [
+    {
+      "Name": "Classes begin",
+      "StartDate": "2024-06-21",
+      "EndDate": "2024-06-21"
+    },
+    {
+      "Name": "Last day to add, drop (delete), elect CR/NC, or audit classes",
+      "StartDate": "2024-06-26",
+      "EndDate": "2024-06-26"
+    },
+    {
+      "Name": "Last day to wait list",
+      "StartDate": "2024-06-26",
+      "EndDate": "2024-06-26"
+    },
+    {
+      "Name": "Last day to withdraw from classes",
+      "StartDate": "2024-07-12",
+      "EndDate": "2024-07-12"
+    },
+    {
+      "Name": "Last day to reverse CR/NC option",
+      "StartDate": "2024-07-26",
+      "EndDate": "2024-07-26"
+    },
+    {
+      "Name": "Classes end",
+      "StartDate": "2024-07-31",
+      "EndDate": "2024-07-31"
+    }
+  ],
+  "Holidays": [
+    {
+      "Name": "Memorial Day holiday",
+      "StartDate": "2024-05-27",
+      "EndDate": "2024-05-27"
+    },
+    {
+      "Name": "Juneteenth",
+      "StartDate": "2024-06-17",
+      "EndDate": "2024-06-17"
+    },
+    {
+      "Name": "Independence Day holiday",
+      "StartDate": "2024-07-04",
+      "EndDate": "2024-07-04"
+    },
+    {
+      "Name": "Pioneer Day holiday (observed)",
+      "StartDate": "2024-07-24",
+      "EndDate": "2024-07-24"
+    }
+  ]
+}

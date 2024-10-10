@@ -7,4 +7,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\EventList\EventList.csproj" />
+    <ProjectReference Include="..\SiteParser\SiteParser.csproj" />
+  </ItemGroup>
+
 </Project>
