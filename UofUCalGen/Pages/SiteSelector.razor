@@ -1,10 +1,9 @@
 ﻿@page "/"
-@using HtmlAgilityPack
 @inject HttpClient Http
 
 <PageTitle>SiteSelector</PageTitle>
 
-<MudThemeProvider IsDarkMode="true" Theme="_theme" />
+<MudThemeProvider IsDarkMode="true" Theme="GlobalVariables.SchoolSpiritTheme" />
 
 <MudPaper Class="pa-4 ma-16">
     <MudText Typo="Typo.subtitle2" Align="Align.Center">Welcome! Please Copy and paste a link to the University of Utah Semester Calendar page or select a page from the drop-down.</MudText>
@@ -23,7 +22,7 @@ else
         <div class="docs-section-content-inner relative d-flex flex-grow-1 flex-wrap justify-center align-center px-12 pb-8 pt-2">
             <MudSelect Placeholder="Select Semester" @bind-Value="siteValue" Label="Semester" ToStringFunc="@tostringFunc"
                        OpenIcon="@Icons.Material.Filled.CalendarMonth" CloseIcon="@Icons.Material.Filled.CalendarMonth" AdornmentColor="Color.Tertiary"
-                             Variant="Variant.Outlined" Disabled="@firstSectionDisabled">
+                       Variant="Variant.Outlined" Disabled="@GlobalVariables.FirstSectionDisabled">
 
             @foreach (var site in sites)
             {
@@ -36,48 +35,29 @@ else
         <div class="docs-section-content-inner relative d-flex flex-grow-1 flex-wrap justify-center align-center px-8 pb-8 pt-2">
             <MudText Typo="Typo.subtitle1" Class="mr-2">Selected value: </MudText>
 
-            <MudChip T="string" Color="Color.Secondary">@(siteValue?.name ?? "Select Semester")</MudChip>
+            <MudChip T="string" Color="Color.Secondary">@(siteValue?.Name ?? "Select Semester")</MudChip>
         </div>
 
         <div class="docs-section-content-inner relative d-flex flex-grow-1 flex-wrap justify-center align-center px-8 pb-8 pt-2">
-            @if ((siteValue?.name ?? "Select Semester") != "Select Semester")
+            @if ((siteValue?.Name ?? "Select Semester") != "Select Semester")
             {
-                <MudFab StartIcon="@Icons.Material.Filled.CloudDownload" Label="Grab Events From Site" Color="Color.Tertiary" OnClick="InitializeSecondPart" Disabled="@firstSectionDisabled"/>
+                <MudFab StartIcon="@Icons.Material.Filled.CloudDownload" Label="Grab Events From Site" Color="Color.Tertiary" OnClick="InitializeSecondPart" Disabled="@GlobalVariables.FirstSectionDisabled" />
             }
         </div>
     </MudPaper>
     
-    <MudCollapse Expanded="false">
+    <MudCollapse Expanded="@GlobalVariables.secondSectionExpanded">
 
+        @* Link to second part which generates calendar dates *@
+        @if( GlobalVariables.chosenPath != null)
+        {
+            <EventSelect />
+        }
     </MudCollapse>
 
 }
 
 @code {
-    // Theme
-    private MudTheme _theme = new()
-    {
-        PaletteLight = new PaletteLight(),
-        PaletteDark = new PaletteDark()
-        {
-            Primary = Colors.Red.Darken3,
-            Secondary = Colors.Gray.Darken1,
-            Tertiary = Colors.Red.Darken4,
-            Background = Colors.Gray.Darken4,
-            AppbarBackground = Colors.Red.Darken4,
-        },
-
-        LayoutProperties = new LayoutProperties()
-        {
-            DrawerWidthLeft = "0px",
-            DrawerWidthRight = "0px"
-        }
-    };
-
-    private bool firstSectionDisabled;
-    private bool secondSectionExpanded;
-
-    private CalendarController calendarController;
 
     private Site siteValue { get; set; }
     private Site[]? sites;
@@ -88,23 +68,29 @@ else
     /// <returns> A Task </returns>
     protected override async Task OnInitializedAsync()
     {
-        firstSectionDisabled = false;
-        secondSectionExpanded = false;
+        GlobalVariables.FirstSectionDisabled = false;
+        GlobalVariables.secondSectionExpanded = true;
+
         sites = await Http.GetFromJsonAsync<Site[]>("preset-data/presetLinks.json");
     }
 
-    protected async Task InitializeSecondPart()
+    protected void InitializeSecondPart()
     {
-        //firstSectionDisabled = true;
+        GlobalVariables.chosenPath = siteValue.Path;
+        GlobalVariables.FirstSectionDisabled = true;
+        GlobalVariables.secondSectionExpanded = true;
+
+        // Make sure objects are updated
+        StateHasChanged();
         
     }
 
     public class Site
     {
-        public string name { get; set; }
+        public string Name { get; set; }
 
-        public string url { get; set; }
+        public string Path { get; set; }
     }
 
-    private Func<Site, string> tostringFunc = ci => ci.name;
+    private Func<Site, string> tostringFunc = ci => ci.Name;
 }

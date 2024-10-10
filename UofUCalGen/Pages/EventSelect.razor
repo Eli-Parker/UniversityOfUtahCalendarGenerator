@@ -1,0 +1,63 @@
+﻿@page "/EventSelect"
+@inject HttpClient Http
+
+<PageTitle>EventSelect</PageTitle>
+
+<MudThemeProvider IsDarkMode="true" Theme="GlobalVariables.SchoolSpiritTheme" />
+
+@if (siteDict == null)
+{
+    <MudPaper Class="pa-4 ma-16">
+        <MudText Typo="Typo.subtitle2">Loading...</MudText>
+    </MudPaper>
+}
+else
+{
+
+    <MudPaper Class="pa-4 ma-16">
+        <MudList T="string" @bind-SelectedValues="SelectedValues" SelectionMode="SelectionMode.MultiSelection" CheckBoxColor="Color.Tertiary">
+            <MudListSubheader>
+                Select Desired Events Below:
+            </MudListSubheader>
+
+            @foreach (string table in siteDict.Keys)
+            {
+                <MudListItem Text=@table>
+                    <NestedList>
+                        @foreach (Event e in siteDict[table])
+                        {
+                            <MudListItem Text=@e.Name Value=@UniqueID(table,e)/>
+                        }
+                    </NestedList>
+                </MudListItem>
+            }
+        </MudList>
+        <MudText> @tostringFunc() </MudText>
+    </MudPaper>
+        }
+
+@code {
+
+    private class Event
+    {
+        public string Name      { get; set; }
+        public string StartDate { get; set; }
+        public string EndDate   { get; set; }
+    }
+    private Dictionary<String, List<Event>> siteDict;
+
+    private IReadOnlyCollection<string> SelectedValues { get; set; }
+
+    private string tostringFunc() => (SelectedValues != null) ? string.Join(", ", SelectedValues) : "";
+
+    private string UniqueID(string table, Event e) => table + "-:-" + e.Name;
+
+    /// <summary>
+    /// When the program loads, load the preset events from the JSON file.
+    /// </summary>
+    /// <returns> A Task </returns>
+    protected override async Task OnInitializedAsync()
+    {
+        siteDict = await Http.GetFromJsonAsync<Dictionary<string, List<Event>>>(GlobalVariables.chosenPath) ?? new();
+    }
+ }
