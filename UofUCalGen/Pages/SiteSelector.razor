@@ -1,9 +1,10 @@
 ﻿@page "/"
 @inject HttpClient Http
+@inject AppState AppState
 
 <PageTitle>SiteSelector</PageTitle>
 
-<MudThemeProvider IsDarkMode="true" Theme="GlobalVariables.SchoolSpiritTheme" />
+<MudThemeProvider IsDarkMode="true" Theme="AppState.SchoolSpiritTheme" />
 
 <MudPaper Class="pa-4 ma-16">
     <MudText Typo="Typo.subtitle2" Align="Align.Center">Welcome! Please Copy and paste a link to the University of Utah Semester Calendar page or select a page from the drop-down.</MudText>
@@ -22,7 +23,7 @@ else
         <div class="docs-section-content-inner relative d-flex flex-grow-1 flex-wrap justify-center align-center px-12 pb-8 pt-2">
             <MudSelect Placeholder="Select Semester" @bind-Value="siteValue" Label="Semester" ToStringFunc="@tostringFunc"
                        OpenIcon="@Icons.Material.Filled.CalendarMonth" CloseIcon="@Icons.Material.Filled.CalendarMonth" AdornmentColor="Color.Tertiary"
-                       Variant="Variant.Outlined" Disabled="@GlobalVariables.FirstSectionDisabled">
+                       Variant="Variant.Outlined" Disabled="@AppState.FirstSectionDisabled">
 
             @foreach (var site in sites)
             {
@@ -41,15 +42,15 @@ else
         <div class="docs-section-content-inner relative d-flex flex-grow-1 flex-wrap justify-center align-center px-8 pb-8 pt-2">
             @if ((siteValue?.Name ?? "Select Semester") != "Select Semester")
             {
-                <MudFab StartIcon="@Icons.Material.Filled.CloudDownload" Label="Grab Events From Site" Color="Color.Tertiary" OnClick="InitializeSecondPart" Disabled="@GlobalVariables.FirstSectionDisabled" />
+                <MudFab StartIcon="@Icons.Material.Filled.CloudDownload" Label="Grab Events From Site" Color="Color.Tertiary" OnClick="ToggleSecondPart" Disabled="@AppState.FirstSectionDisabled" />
             }
         </div>
     </MudPaper>
     
-    <MudCollapse Expanded="@GlobalVariables.secondSectionExpanded">
+    <MudCollapse Expanded="@AppState.SecondSectionExpanded">
 
         @* Link to second part which generates calendar dates *@
-        @if( GlobalVariables.chosenPath != null)
+        @if( AppState.ChosenPath != null)
         {
             <EventSelect />
         }
@@ -68,24 +69,30 @@ else
     /// <returns> A Task </returns>
     protected override async Task OnInitializedAsync()
     {
-        GlobalVariables.FirstSectionDisabled = false;
-        GlobalVariables.secondSectionExpanded = true;
+        AppState.FirstSectionDisabled = false;
+        AppState.SecondSectionExpanded = false;
 
+        // Site Selector component so EventSelect can access the ToggleSecondPart method
+        AppState.SiteSelectorComponent = this;
+
+        // Get Presets from JSON file
         sites = await Http.GetFromJsonAsync<Site[]>("preset-data/presetLinks.json");
     }
 
-    protected void InitializeSecondPart()
+    /// <summary>
+    /// Toggles whether the second page (event select) is visible to the user.
+    /// </summary>
+    public void ToggleSecondPart()
     {
-        GlobalVariables.chosenPath = siteValue.Path;
-        GlobalVariables.FirstSectionDisabled = true;
-        GlobalVariables.secondSectionExpanded = true;
+        AppState.ChosenPath = siteValue.Path;
+        AppState.FirstSectionDisabled = ! AppState.FirstSectionDisabled;
+        AppState.SecondSectionExpanded = !AppState.SecondSectionExpanded;
 
-        // Make sure objects are updated
         StateHasChanged();
-        
+
     }
 
-    public class Site
+    private class Site
     {
         public string Name { get; set; }
 

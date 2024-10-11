@@ -1,9 +1,11 @@
 ﻿@page "/EventSelect"
+@using CalendarController
 @inject HttpClient Http
+@inject AppState AppState
 
 <PageTitle>EventSelect</PageTitle>
 
-<MudThemeProvider IsDarkMode="true" Theme="GlobalVariables.SchoolSpiritTheme" />
+<MudThemeProvider IsDarkMode="true" Theme="AppState.SchoolSpiritTheme" />
 
 @if (siteDict == null)
 {
@@ -14,10 +16,10 @@
 else
 {
 
-    <MudPaper Class="pa-4 ma-16">
-        <MudList T="string" @bind-SelectedValues="SelectedValues" SelectionMode="SelectionMode.MultiSelection" CheckBoxColor="Color.Tertiary">
+    <MudPaper Class="pa-4 mx-16">
+        <MudList T="Event" @bind-SelectedValues="SelectedValues" SelectionMode="SelectionMode.MultiSelection" CheckBoxColor="Color.Tertiary">
             <MudListSubheader>
-                Select Desired Events Below:
+                <MudText Typo="Typo.subtitle2" Align="Align.Center">Select Desired Events Below:</MudText>
             </MudListSubheader>
 
             @foreach (string table in siteDict.Keys)
@@ -26,27 +28,54 @@ else
                     <NestedList>
                         @foreach (Event e in siteDict[table])
                         {
-                            <MudListItem Text=@e.Name Value=@UniqueID(table,e)/>
+                            <MudListItem Text=@e.Name Value=@e/>
                         }
                     </NestedList>
                 </MudListItem>
             }
         </MudList>
-        <MudText> @tostringFunc() </MudText>
+
+        <div class="mb-6" />
+
+        <MudListSubheader>
+            <MudText Typo="Typo.subtitle2" Align="Align.Center">Selected Events: @SelectedEventCount</MudText>
+        </MudListSubheader>
+
+        <MudDivider DividerType="DividerType.Middle" Class="mb-12 mt-6"/>
+
+        <MudGrid Spacing=12 Justify="Justify.Center">
+            <MudItem>
+                <MudFab StartIcon="@Icons.Material.Filled.ArrowBack" Label="Back to Semester Selection" OnClick="@BackToFirstSection"/>
+            </MudItem>
+            <MudItem>
+                <MudFab StartIcon="@Icons.Material.Filled.FileDownload" Label="Export Calendar File" />
+            </MudItem>
+        </MudGrid>
+
+        <div class="my-8"/>
     </MudPaper>
         }
 
 @code {
 
-    private class Event
+    /// <summary>
+    /// Helper class for the site to be able to generate calendar file from the JSON type events.
+    /// </summary>
+    public class Event
     {
-        public string Name      { get; set; }
+        public string Name { get; set; }
+
         public string StartDate { get; set; }
-        public string EndDate   { get; set; }
+
+        public string EndDate { get; set; }
     }
+
     private Dictionary<String, List<Event>> siteDict;
 
-    private IReadOnlyCollection<string> SelectedValues { get; set; }
+    private IReadOnlyCollection<Event> SelectedValues { get; set; }
+
+    private int SelectedEventCount => SelectedValues?.Count ?? 0;
+
 
     private string tostringFunc() => (SelectedValues != null) ? string.Join(", ", SelectedValues) : "";
 
@@ -58,6 +87,35 @@ else
     /// <returns> A Task </returns>
     protected override async Task OnInitializedAsync()
     {
-        siteDict = await Http.GetFromJsonAsync<Dictionary<string, List<Event>>>(GlobalVariables.chosenPath) ?? new();
+        siteDict = await Http.GetFromJsonAsync<Dictionary<string, List<Event>>>(AppState.ChosenPath) ?? new();
     }
- }
+
+    /// <summary>
+    /// Exports the selected events to a calendar file and triggers a download.
+    /// </summary>
+    private void/*async Task*/ ExportCalendarFile()
+    {
+        var events = SelectedValues?.Select(e => new { e.Name, e.StartDate, e.EndDate }).ToList();
+        if (events == null || !events.Any())
+        {
+            // Handle no selected events case
+            return;
+        }
+
+
+        //var json = JsonSerializer.Serialize(events);
+        //var byteArray = Encoding.UTF8.GetBytes(json);
+        //var base64 = Convert.ToBase64String(byteArray);
+
+       // await JS.InvokeVoidAsync("downloadFile", "events.json", base64);
+    }
+
+    /// <summary>
+    /// Calls the Toggle Second Part method in the SiteSelector component to bring the user
+    /// to the first page.
+    /// </summary>
+    protected void BackToFirstSection()
+    {
+        AppState.SiteSelectorComponent.ToggleSecondPart();
+    }
+}
