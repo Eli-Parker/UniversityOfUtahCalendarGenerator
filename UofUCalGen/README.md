@@ -54,3 +54,4 @@ or shoot me an email at <racecar47@icloud.com>
 ## Acknowledgments
 
 - Thanks a million to the team at [MudBlazor](https://mudblazor.com/) for their amazing Blazor library
+- <a href="https://www.freepik.com/free-vector/schedule-calendar-flat-style_41411895.htm#query=calendar%20png&position=6&from_view=keyword&track=ais_hybrid&uuid=2d985371-b9b1-47bf-b550-91669a5c47f8">Favicon Image by juicy_fish</a> on Freepik

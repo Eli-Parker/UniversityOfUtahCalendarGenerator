@@ -30,7 +30,7 @@ public class AppState
         {
             Primary = Colors.Red.Darken3,
             Secondary = Colors.Gray.Darken1,
-            Tertiary = Colors.Red.Darken4,
+            Tertiary = Colors.Gray.Lighten2,
             Background = Colors.Gray.Darken4,
             AppbarBackground = Colors.Red.Darken4,
         },

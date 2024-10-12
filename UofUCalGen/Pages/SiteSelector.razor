@@ -5,7 +5,7 @@
 <MudThemeProvider IsDarkMode="true" Theme="AppState.SchoolSpiritTheme" />
 
 <MudPaper Class="pa-4 ma-16">
-    <MudText Typo="Typo.subtitle2" Align="Align.Center">Welcome! Please Copy and paste a link to the University of Utah Semester Calendar page or select a page from the drop-down.</MudText>
+    <MudText Typo="Typo.subtitle2" Align="Align.Center">Welcome! Please select a semester from the drop-down below to begin.</MudText>
 </MudPaper>
 
 @if (sites == null)
@@ -20,7 +20,7 @@ else
         <!-- MudSelect component to display a drop-down list of semester calendar pages -->
         <div class="docs-section-content-inner relative d-flex flex-grow-1 flex-wrap justify-center align-center px-12 pb-8 pt-2">
             <MudSelect Placeholder="Select Semester" @bind-Value="siteValue" Label="Semester" ToStringFunc="@tostringFunc"
-                       OpenIcon="@Icons.Material.Filled.CalendarMonth" CloseIcon="@Icons.Material.Filled.CalendarMonth" AdornmentColor="Color.Tertiary"
+                       OpenIcon="@Icons.Material.Filled.CalendarMonth" CloseIcon="@Icons.Material.Filled.CalendarMonth" AdornmentColor="Color.Primary"
                        Variant="Variant.Outlined" Disabled="@AppState.FirstSectionDisabled">
 
             @foreach (var site in sites)
@@ -40,7 +40,7 @@ else
         <div class="docs-section-content-inner relative d-flex flex-grow-1 flex-wrap justify-center align-center px-8 pb-8 pt-2">
             @if ((siteValue?.Name ?? "Select Semester") != "Select Semester")
             {
-                <MudFab StartIcon="@Icons.Material.Filled.CloudDownload" Label="Grab Events From Site" Color="Color.Tertiary" OnClick="ToggleSecondSection" Disabled="@AppState.FirstSectionDisabled" />
+                <MudFab StartIcon="@Icons.Material.Filled.CloudDownload" Label="Grab Events From Site" Color="Color.Primary" OnClick="ToggleSecondSection" Disabled="@AppState.FirstSectionDisabled" />
             }
         </div>
     </MudPaper>
