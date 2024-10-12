@@ -8,14 +8,14 @@
 
 @if ( ! FinishedLoading)
 {
-    <MudPaper Class="pa-4 mx-16">
+    <MudPaper Class="pa-4 mx-2 mx-sm-8 mx-md-16 mx-lg-16 mx-xl-16 mx-xxl-16">
         <MudText Typo="Typo.subtitle2" Align="Align.Center">Loading...</MudText>
     </MudPaper>
 }
 else
 {
 
-    <MudPaper Class="pa-4 mx-16">
+    <MudPaper Class="pa-4 mx-2 mx-sm-8 mx-md-16 mx-lg-16 mx-xl-16 mx-xxl-16">
         <MudList T="Event" @bind-SelectedValues="SelectedValues" SelectionMode="SelectionMode.MultiSelection" CheckBoxColor="Color.Primary">
             <MudListSubheader>
                 <MudText Typo="Typo.subtitle2" Align="Align.Center">Select Desired Events Below:</MudText>

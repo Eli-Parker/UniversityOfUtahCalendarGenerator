@@ -1,7 +1,7 @@
 {
   "mainAssemblyName": "UofUCalGen",
   "resources": {
-    "hash": "sha256-TXZG808WdiyUgXi7jYiW3ch3L1ID3Zn2p9f/8khqWgE=",
+    "hash": "sha256-qfI8tk3PTaWOIAcZ6OfeC7zPeOzWDMj1nPVNuGH+l48=",
     "jsModuleNative": {
       "dotnet.native.8.0.8.ksydpxl4ej.js": "sha256-30JYh7bLu52a23ViozISGEThb53Z4vYyx+JY7ArWLvk="
     },
@@ -79,7 +79,7 @@
       "System.Text.RegularExpressions.wasm": "sha256-z3kmNABlESBqnQXvBY+AlAEN6/ilYxSyy05BEKa08fM=",
       "System.Threading.wasm": "sha256-/sB9Aucuch2CQz4pnfsZuu5jossTPJjDZbDvKQuEVek=",
       "System.wasm": "sha256-ka1SPMSVGn53xDzeBa40FQCsprKEF+n+wpvvd1HyMNE=",
-      "UofUCalGen.wasm": "sha256-+LrzfFr53J1hB2SDDLrOsQqNEabPoW06PB05Yngq4Y4="
+      "UofUCalGen.wasm": "sha256-BdISYGFAAqaCIb78xcM8vWCCHqOkZEVCpoCgxbe+YLM="
     }
   },
   "cacheBootResources": true,

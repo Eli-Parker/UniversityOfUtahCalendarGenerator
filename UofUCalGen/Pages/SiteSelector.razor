@@ -4,19 +4,19 @@
 
 <MudThemeProvider IsDarkMode="true" Theme="AppState.SchoolSpiritTheme" />
 
-<MudPaper Class="pa-4 ma-16">
+<MudPaper Class="pa-4 my-16 mx-2 mx-sm-8 mx-md-16 mx-lg-16 mx-xl-16 mx-xxl-16">
     <MudText Typo="Typo.subtitle2" Align="Align.Center">Welcome! Please select a semester from the drop-down below to begin.</MudText>
 </MudPaper>
 
 @if (sites == null)
 {
-    <MudPaper Class="pa-4 ma-16">
+    <MudPaper Class="pa-4 my-16 mx-2 mx-sm-8 mx-md-16 mx-lg-16 mx-xl-16 mx-xxl-16">
         <MudText Typo="Typo.subtitle2">Loading...</MudText>
     </MudPaper>
 }
 else
 {
-    <MudPaper Class="pa-4 ma-16">
+    <MudPaper Class="pa-4 my-16 mx-2 mx-sm-8 mx-md-16 mx-lg-16 mx-xl-16 mx-xxl-16">
         <!-- MudSelect component to display a drop-down list of semester calendar pages -->
         <div class="docs-section-content-inner relative d-flex flex-grow-1 flex-wrap justify-center align-center px-12 pb-8 pt-2">
             <MudSelect Placeholder="Select Semester" @bind-Value="siteValue" Label="Semester" ToStringFunc="@tostringFunc"
