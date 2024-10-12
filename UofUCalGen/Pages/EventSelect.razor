@@ -2,15 +2,14 @@
 @using CalendarController
 @inject HttpClient Http
 @inject AppState AppState
-
-<PageTitle>EventSelect</PageTitle>
+@inject IJSRuntime JSRuntime
 
 <MudThemeProvider IsDarkMode="true" Theme="AppState.SchoolSpiritTheme" />
 
-@if (siteDict == null)
+@if ( ! FinishedLoading)
 {
-    <MudPaper Class="pa-4 ma-16">
-        <MudText Typo="Typo.subtitle2">Loading...</MudText>
+    <MudPaper Class="pa-4 mx-16">
+        <MudText Typo="Typo.subtitle2" Align="Align.Center">Loading...</MudText>
     </MudPaper>
 }
 else
@@ -48,7 +47,7 @@ else
                 <MudFab StartIcon="@Icons.Material.Filled.ArrowBack" Label="Back to Semester Selection" OnClick="@BackToFirstSection"/>
             </MudItem>
             <MudItem>
-                <MudFab StartIcon="@Icons.Material.Filled.FileDownload" Label="Export Calendar File" />
+                <MudFab StartIcon="@Icons.Material.Filled.FileDownload" Label="Export Calendar File" OnClick="ExportCalendarFile" />
             </MudItem>
         </MudGrid>
 
@@ -70,6 +69,8 @@ else
         public string EndDate { get; set; }
     }
 
+    private bool FinishedLoading;
+
     private Dictionary<String, List<Event>> siteDict;
 
     private IReadOnlyCollection<Event> SelectedValues { get; set; }
@@ -79,7 +80,6 @@ else
 
     private string tostringFunc() => (SelectedValues != null) ? string.Join(", ", SelectedValues) : "";
 
-    private string UniqueID(string table, Event e) => table + "-:-" + e.Name;
 
     /// <summary>
     /// When the program loads, load the preset events from the JSON file.
@@ -87,35 +87,73 @@ else
     /// <returns> A Task </returns>
     protected override async Task OnInitializedAsync()
     {
-        siteDict = await Http.GetFromJsonAsync<Dictionary<string, List<Event>>>(AppState.ChosenPath) ?? new();
+        AppState.EventSelectComponent = this;
+        await UpdateSiteValues();
+    }
+
+    /// <summary>
+    /// Updates the dictionary which holds all the events from the selected site.
+    /// </summary>
+    /// <returns> A Task </returns>
+    public async Task UpdateSiteValues()
+    {
+        FinishedLoading = false;
+
+        if (siteDict != null)
+        {
+            siteDict = await Http.GetFromJsonAsync<Dictionary<string, List<Event>>>(AppState.ChosenPath) ?? new();
+        }
+        else
+        {
+            siteDict = new();
+        }
+        FinishedLoading = true;
+        SelectedValues = [];
+        StateHasChanged();
     }
 
     /// <summary>
     /// Exports the selected events to a calendar file and triggers a download.
     /// </summary>
-    private void/*async Task*/ ExportCalendarFile()
+    private async Task ExportCalendarFile()
     {
-        var events = SelectedValues?.Select(e => new { e.Name, e.StartDate, e.EndDate }).ToList();
-        if (events == null || !events.Any())
+        // Get the event lists separated from the list of selected events
+        List<string> SelectedNames = new();
+        List<DateOnly> SelectedStartDates = new();
+        List<DateOnly> SelectedEndDates = new();
+
+        if (SelectedValues != null)
         {
-            // Handle no selected events case
-            return;
+            foreach (var eventItem in SelectedValues)
+            {
+                SelectedNames.Add(eventItem.Name);
+                SelectedStartDates.Add( DateOnly.Parse(eventItem.StartDate) );
+                SelectedEndDates.Add  ( DateOnly.Parse(eventItem.EndDate) );
+            }
         }
 
+        // Create calendar file
 
-        //var json = JsonSerializer.Serialize(events);
-        //var byteArray = Encoding.UTF8.GetBytes(json);
-        //var base64 = Convert.ToBase64String(byteArray);
+        var bytes = CalendarController.GetCalendarFileFromSelected(SelectedNames, SelectedStartDates, SelectedEndDates);
 
-       // await JS.InvokeVoidAsync("downloadFile", "events.json", base64);
+        string base64String = Convert.ToBase64String(bytes);
+
+        await JSRuntime.InvokeVoidAsync(
+          "downloadFromByteArray",
+          new
+          {
+              ByteArray = base64String,
+              FileName =  "Selected Events" + ".ics",
+              ContentType = "text/calendar"
+          }); 
     }
 
     /// <summary>
     /// Calls the Toggle Second Part method in the SiteSelector component to bring the user
     /// to the first page.
     /// </summary>
-    protected void BackToFirstSection()
+    protected async Task BackToFirstSection()
     {
-        AppState.SiteSelectorComponent.ToggleSecondPart();
+        await AppState.SiteSelectorComponent.ToggleSecondSection();
     }
 }

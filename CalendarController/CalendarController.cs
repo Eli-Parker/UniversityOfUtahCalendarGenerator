@@ -67,14 +67,14 @@ public class CalendarController
     /// <param name="startDates"> The list of event start dates which we want added to the calendar file. </param>
     /// <param name="endDates"> The list of event end dates which we want added to the calendar file. </param>
     /// <returns> A byte array which contains the data for a .ics file. </returns>
-    public byte[] GetCalendarFileFromSelected(List<string> eventNames, List<DateOnly> startDates, List<DateOnly> endDates)
+    public static byte[] GetCalendarFileFromSelected(List<string> eventNames, List<DateOnly> startDates, List<DateOnly> endDates)
     {
         // Make a new instance of the calendar file generator
         CalendarFileGenerator calFileGen = new();
         // Add those lists to the calendar file generator minus the events which aren't contained in the selection
         for (int i = 0; i < eventNames.Count; i++)
         {
-            calFileGen.AddCalendarEvent(eventNames[i], startDates[i], endDates[i]);
+            calFileGen.AddCalendarEvent(eventNames.ElementAt(i), startDates.ElementAt(i), endDates.ElementAt(i));
         }
 
         // Return final value

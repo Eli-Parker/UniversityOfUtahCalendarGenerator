@@ -2,8 +2,6 @@
 @inject HttpClient Http
 @inject AppState AppState
 
-<PageTitle>SiteSelector</PageTitle>
-
 <MudThemeProvider IsDarkMode="true" Theme="AppState.SchoolSpiritTheme" />
 
 <MudPaper Class="pa-4 ma-16">
@@ -42,7 +40,7 @@ else
         <div class="docs-section-content-inner relative d-flex flex-grow-1 flex-wrap justify-center align-center px-8 pb-8 pt-2">
             @if ((siteValue?.Name ?? "Select Semester") != "Select Semester")
             {
-                <MudFab StartIcon="@Icons.Material.Filled.CloudDownload" Label="Grab Events From Site" Color="Color.Tertiary" OnClick="ToggleSecondPart" Disabled="@AppState.FirstSectionDisabled" />
+                <MudFab StartIcon="@Icons.Material.Filled.CloudDownload" Label="Grab Events From Site" Color="Color.Tertiary" OnClick="ToggleSecondSection" Disabled="@AppState.FirstSectionDisabled" />
             }
         </div>
     </MudPaper>
@@ -50,10 +48,8 @@ else
     <MudCollapse Expanded="@AppState.SecondSectionExpanded">
 
         @* Link to second part which generates calendar dates *@
-        @if( AppState.ChosenPath != null)
-        {
-            <EventSelect />
-        }
+        <EventSelect />
+
     </MudCollapse>
 
 }
@@ -71,6 +67,7 @@ else
     {
         AppState.FirstSectionDisabled = false;
         AppState.SecondSectionExpanded = false;
+        AppState.SecondSectionEnabled = false;
 
         // Site Selector component so EventSelect can access the ToggleSecondPart method
         AppState.SiteSelectorComponent = this;
@@ -79,17 +76,13 @@ else
         sites = await Http.GetFromJsonAsync<Site[]>("preset-data/presetLinks.json");
     }
 
-    /// <summary>
-    /// Toggles whether the second page (event select) is visible to the user.
-    /// </summary>
-    public void ToggleSecondPart()
+    public async Task ToggleSecondSection()
     {
         AppState.ChosenPath = siteValue.Path;
-        AppState.FirstSectionDisabled = ! AppState.FirstSectionDisabled;
+        AppState.FirstSectionDisabled = !AppState.FirstSectionDisabled;
         AppState.SecondSectionExpanded = !AppState.SecondSectionExpanded;
-
+        await AppState.EventSelectComponent.UpdateSiteValues();
         StateHasChanged();
-
     }
 
     private class Site

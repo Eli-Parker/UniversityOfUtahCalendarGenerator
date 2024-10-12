@@ -15,6 +15,11 @@ public class AppState
         get; set;
     }
 
+    public EventSelect EventSelectComponent
+    {
+        get; set;
+    }
+
     /// <summary>
     /// Theme to use for the application.
     /// </summary>
@@ -41,6 +46,11 @@ public class AppState
     /// Controls whether the first section of the site is disabled
     /// </summary>
     public bool FirstSectionDisabled { get; set; }
+
+    /// <summary>
+    /// Controls whether the second section is enabled
+    /// </summary>
+    public bool SecondSectionEnabled { get; set; }
 
     /// <summary>
     /// Controls whether the drop-down for the second section is expanded
