@@ -1,0 +1,27 @@
+﻿[
+  {
+    "name": "Spring 2024",
+    "path": "preset-data/Spring 2024.json"
+
+  },
+  {
+    "name": "Summer 2024",
+    "path": "preset-data/Summer 2024.json"
+
+  },
+  {
+    "name": "Fall 2024",
+    "path": "preset-data/Fall 2024.json"
+
+  },
+  {
+    "name": "Spring 2025",
+    "path": "preset-data/Spring 2025.json"
+
+  },
+  {
+    "name": "Summer 2025",
+    "path": "preset-data/Summer 2025.json"
+
+  }
+]

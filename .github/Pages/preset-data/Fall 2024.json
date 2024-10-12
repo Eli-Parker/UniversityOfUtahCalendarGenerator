@@ -1,0 +1,177 @@
+{
+  "General Calendar Dates": [
+    {
+      "Name": "Class Schedule \u0026 Registration dates available",
+      "StartDate": "2024-03-04",
+      "EndDate": "2024-03-04"
+    },
+    {
+      "Name": "Registration dates begin",
+      "StartDate": "2024-04-01",
+      "EndDate": "2024-04-01"
+    },
+    {
+      "Name": "Deadline to apply for graduation",
+      "StartDate": "2024-08-30",
+      "EndDate": "2024-08-30"
+    },
+    {
+      "Name": "Open enrollment",
+      "StartDate": "2024-07-29",
+      "EndDate": "2024-07-29"
+    },
+    {
+      "Name": "House Bill 60 registration",
+      "StartDate": "2024-08-12",
+      "EndDate": "2024-08-12"
+    },
+    {
+      "Name": "Tuition payment due",
+      "StartDate": "2024-08-30",
+      "EndDate": "2024-08-30"
+    },
+    {
+      "Name": "Census deadline",
+      "StartDate": "2024-09-09",
+      "EndDate": "2024-09-09"
+    },
+    {
+      "Name": "Grades due",
+      "StartDate": "2024-12-23",
+      "EndDate": "2024-12-23"
+    }
+  ],
+  "Semester Length Classes": [
+    {
+      "Name": "Classes begin",
+      "StartDate": "2024-08-19",
+      "EndDate": "2024-08-19"
+    },
+    {
+      "Name": "Last day to add without a permission code",
+      "StartDate": "2024-08-23",
+      "EndDate": "2024-08-23"
+    },
+    {
+      "Name": "Last day to wait list",
+      "StartDate": "2024-08-23",
+      "EndDate": "2024-08-23"
+    },
+    {
+      "Name": "Last day to add, drop (delete), elect CR/NC, or audit classes",
+      "StartDate": "2024-08-30",
+      "EndDate": "2024-08-30"
+    },
+    {
+      "Name": "Last day to withdraw from classes",
+      "StartDate": "2024-10-18",
+      "EndDate": "2024-10-18"
+    },
+    {
+      "Name": "Last day to reverse CR/NC option",
+      "StartDate": "2024-11-29",
+      "EndDate": "2024-11-29"
+    },
+    {
+      "Name": "Classes end",
+      "StartDate": "2024-12-05",
+      "EndDate": "2024-12-05"
+    },
+    {
+      "Name": "Reading day",
+      "StartDate": "2024-12-06",
+      "EndDate": "2024-12-06"
+    },
+    {
+      "Name": "Final exam period",
+      "StartDate": "2024-12-09",
+      "EndDate": "2024-12-13"
+    }
+  ],
+  "First Half Classes": [
+    {
+      "Name": "Classes begin",
+      "StartDate": "2024-08-19",
+      "EndDate": "2024-08-19"
+    },
+    {
+      "Name": "Last day to wait list",
+      "StartDate": "2024-08-23",
+      "EndDate": "2024-08-23"
+    },
+    {
+      "Name": "Last day to add, drop (delete), elect CR/NC, or audit classes",
+      "StartDate": "2024-08-23",
+      "EndDate": "2024-08-23"
+    },
+    {
+      "Name": "Last day to withdraw from classes",
+      "StartDate": "2024-09-13",
+      "EndDate": "2024-09-13"
+    },
+    {
+      "Name": "Last day to reverse CR/NC option",
+      "StartDate": "2024-09-27",
+      "EndDate": "2024-09-27"
+    },
+    {
+      "Name": "Classes end",
+      "StartDate": "2024-10-04",
+      "EndDate": "2024-10-04"
+    }
+  ],
+  "Second Half Classes": [
+    {
+      "Name": "Classes begin",
+      "StartDate": "2024-10-14",
+      "EndDate": "2024-10-14"
+    },
+    {
+      "Name": "Last day to wait list",
+      "StartDate": "2024-10-18",
+      "EndDate": "2024-10-18"
+    },
+    {
+      "Name": "Last day to add, drop (delete), elect CR/NC, or audit classes",
+      "StartDate": "2024-10-18",
+      "EndDate": "2024-10-18"
+    },
+    {
+      "Name": "Last day to withdraw from classes",
+      "StartDate": "2024-11-08",
+      "EndDate": "2024-11-08"
+    },
+    {
+      "Name": "Last day to reverse CR/NC option",
+      "StartDate": "2024-11-29",
+      "EndDate": "2024-11-29"
+    },
+    {
+      "Name": "Classes end",
+      "StartDate": "2024-12-05",
+      "EndDate": "2024-12-05"
+    }
+  ],
+  "Holidays": [
+    {
+      "Name": "Labor Day",
+      "StartDate": "2024-09-02",
+      "EndDate": "2024-09-02"
+    },
+    {
+      "Name": "Fall Break",
+      "StartDate": "2024-10-06",
+      "EndDate": "2024-10-13"
+    },
+    {
+      "Name": "Thanksgiving Break",
+      "StartDate": "2024-11-28",
+      "EndDate": "2024-12-01"
+    },
+    {
+      "Name": "Holiday Recess",
+      "StartDate": "2024-12-14",
+      "EndDate": "2025-01-05"
+    }
+  ]
+}
