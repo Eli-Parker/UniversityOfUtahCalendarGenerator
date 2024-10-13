@@ -1,0 +1,197 @@
+{
+  "General Calendar Dates": [
+    {
+      "Name": "Class schedule available",
+      "StartDate": "2024-09-25",
+      "EndDate": "2024-09-25"
+    },
+    {
+      "Name": "Registration dates available",
+      "StartDate": "2024-09-25",
+      "EndDate": "2024-09-25"
+    },
+    {
+      "Name": "Registration dates begin",
+      "StartDate": "2024-11-02",
+      "EndDate": "2024-11-02"
+    },
+    {
+      "Name": "Deadline to apply for graduation",
+      "StartDate": "2024-01-19",
+      "EndDate": "2024-01-19"
+    },
+    {
+      "Name": "Open enrollment",
+      "StartDate": "2024-11-27",
+      "EndDate": "2024-11-27"
+    },
+    {
+      "Name": "House Bill 60 registration",
+      "StartDate": "2024-01-02",
+      "EndDate": "2024-01-02"
+    },
+    {
+      "Name": "Tuition payment due",
+      "StartDate": "2024-01-19",
+      "EndDate": "2024-01-19"
+    },
+    {
+      "Name": "Census deadline",
+      "StartDate": "2024-01-29",
+      "EndDate": "2024-01-29"
+    },
+    {
+      "Name": "University Commencement \u0026 Convocation Exercises",
+      "StartDate": "2024-05-02",
+      "EndDate": "2024-05-03"
+    },
+    {
+      "Name": "College of Law Graduation Exercises",
+      "StartDate": "2024-05-10",
+      "EndDate": "2024-05-10"
+    },
+    {
+      "Name": "Gradesdue",
+      "StartDate": "2024-05-13",
+      "EndDate": "2024-05-13"
+    },
+    {
+      "Name": "School of Dentistry Graduation Exercises",
+      "StartDate": "2024-05-17",
+      "EndDate": "2024-05-17"
+    },
+    {
+      "Name": "\n                                    School of Medicine Graduation Exercises\n                                 ",
+      "StartDate": "2024-05-17",
+      "EndDate": "2024-05-17"
+    }
+  ],
+  "Semester Length Classes": [
+    {
+      "Name": "Classes begin",
+      "StartDate": "2024-01-08",
+      "EndDate": "2024-01-08"
+    },
+    {
+      "Name": "Last day to add without a permission code",
+      "StartDate": "2024-01-12",
+      "EndDate": "2024-01-12"
+    },
+    {
+      "Name": "Last day to wait list",
+      "StartDate": "2024-01-12",
+      "EndDate": "2024-01-12"
+    },
+    {
+      "Name": "Last day to add, drop, audit, and elect CR/NC",
+      "StartDate": "2024-01-19",
+      "EndDate": "2024-01-19"
+    },
+    {
+      "Name": "Last day to withdraw from classes",
+      "StartDate": "2024-03-01",
+      "EndDate": "2024-03-01"
+    },
+    {
+      "Name": "Last day to reverse CR/NC option",
+      "StartDate": "2024-04-19",
+      "EndDate": "2024-04-19"
+    },
+    {
+      "Name": "Classes end",
+      "StartDate": "2024-04-23",
+      "EndDate": "2024-04-23"
+    },
+    {
+      "Name": "Reading Day",
+      "StartDate": "2024-04-24",
+      "EndDate": "2024-04-24"
+    },
+    {
+      "Name": "Final exam period",
+      "StartDate": "2024-04-25",
+      "EndDate": "2024-05-01"
+    }
+  ],
+  "First Half Classes": [
+    {
+      "Name": "Classes begin",
+      "StartDate": "2024-01-08",
+      "EndDate": "2024-01-08"
+    },
+    {
+      "Name": "Last day to add, drop (delete), audit, and elect CR/NC",
+      "StartDate": "2024-01-12",
+      "EndDate": "2024-01-12"
+    },
+    {
+      "Name": "Last day to wait list",
+      "StartDate": "2024-01-12",
+      "EndDate": "2024-01-12"
+    },
+    {
+      "Name": "Last day to withdraw from classes",
+      "StartDate": "2024-02-02",
+      "EndDate": "2024-02-02"
+    },
+    {
+      "Name": "Last day to reverse CR/NC option",
+      "StartDate": "2024-02-23",
+      "EndDate": "2024-02-23"
+    },
+    {
+      "Name": "Classes end",
+      "StartDate": "2024-02-28",
+      "EndDate": "2024-02-28"
+    }
+  ],
+  "Second Half Classes": [
+    {
+      "Name": "Classes begin",
+      "StartDate": "2024-02-29",
+      "EndDate": "2024-02-29"
+    },
+    {
+      "Name": "Last day to wait list",
+      "StartDate": "2024-03-13",
+      "EndDate": "2024-03-13"
+    },
+    {
+      "Name": "Last day to add, drop, audit, and elect CR/NC",
+      "StartDate": "2024-03-13",
+      "EndDate": "2024-03-13"
+    },
+    {
+      "Name": "Last day to withdraw from classes",
+      "StartDate": "2024-04-05",
+      "EndDate": "2024-04-05"
+    },
+    {
+      "Name": "Last day to reverse CR/NC option",
+      "StartDate": "2024-04-19",
+      "EndDate": "2024-04-19"
+    },
+    {
+      "Name": "Classes end",
+      "StartDate": "2024-04-23",
+      "EndDate": "2024-04-23"
+    }
+  ],
+  "Holidays": [
+    {
+      "Name": "Martin Luther King Jr. Day holiday",
+      "StartDate": "2024-01-15",
+      "EndDate": "2024-01-15"
+    },
+    {
+      "Name": "Presidents Day holiday",
+      "StartDate": "2024-02-19",
+      "EndDate": "2024-02-19"
+    },
+    {
+      "Name": "Spring break",
+      "StartDate": "2024-03-03",
+      "EndDate": "2024-03-10"
+    }
+  ]
+}

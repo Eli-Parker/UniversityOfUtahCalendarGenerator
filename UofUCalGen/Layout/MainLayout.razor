@@ -7,7 +7,10 @@
 
 <MudLayout>
     <MudAppBar>
-        My Application
+        <MudText Color="Color.Tertiary" Typo="Typo.subtitle2">Semester Calendar Generator</MudText>
+        <MudSpacer/>
+        <MudIconButton Icon="@Icons.Custom.Brands.GitHub" Href="https://github.com/Eli-Parker" Edge="Edge.End" Color="Color.Tertiary" />
+
     </MudAppBar>
     <MudDrawer Open="true">
 
@@ -16,19 +19,3 @@
         @Body
     </MudMainContent>
 </MudLayout>
-@*
-inherits LayoutComponentBase
-<div class="page">
-    <div class="sidebar">
-        <NavMenu />
-    </div>
-    <main>
-        <div class="top-row px-4">
-            <a href="https://github.com/Eli-Parker/UniversityOfUtahCalendarGenerator" target="_blank">About This Project</a>
-        </div>
-
-        <article class="content px-4">
-            @Body
-        </article>
-    </main>
-</div>*@

@@ -1,0 +1,159 @@
+﻿@page "/EventSelect"
+@using CalendarController
+@inject HttpClient Http
+@inject AppState AppState
+@inject IJSRuntime JSRuntime
+
+<MudThemeProvider IsDarkMode="true" Theme="AppState.SchoolSpiritTheme" />
+
+@if ( ! FinishedLoading)
+{
+    <MudPaper Class="pa-4 mx-2 mx-sm-8 mx-md-16 mx-lg-16 mx-xl-16 mx-xxl-16">
+        <MudText Typo="Typo.subtitle2" Align="Align.Center">Loading...</MudText>
+    </MudPaper>
+}
+else
+{
+
+    <MudPaper Class="pa-4 mx-2 mx-sm-8 mx-md-16 mx-lg-16 mx-xl-16 mx-xxl-16">
+        <MudList T="Event" @bind-SelectedValues="SelectedValues" SelectionMode="SelectionMode.MultiSelection" CheckBoxColor="Color.Primary">
+            <MudListSubheader>
+                <MudText Typo="Typo.subtitle2" Align="Align.Center">Select Desired Events Below:</MudText>
+            </MudListSubheader>
+
+            @foreach (string table in siteDict.Keys)
+            {
+                <MudListItem Text=@table>
+                    <NestedList>
+                        @foreach (Event e in siteDict[table])
+                        {
+                            <MudListItem Text=@e.Name Value=@e/>
+                        }
+                    </NestedList>
+                </MudListItem>
+            }
+        </MudList>
+
+        <div class="mb-6" />
+
+        <MudListSubheader>
+            <MudText Typo="Typo.subtitle2" Align="Align.Center">Selected Events: @SelectedEventCount</MudText>
+        </MudListSubheader>
+
+        <MudDivider DividerType="DividerType.Middle" Class="mb-12 mt-6"/>
+
+        <MudGrid Spacing=12 Justify="Justify.Center">
+            <MudItem>
+                <MudFab StartIcon="@Icons.Material.Filled.ArrowBack" Label="Back to Semester Selection" OnClick="@BackToFirstSection"/>
+            </MudItem>
+            <MudItem>
+                <MudFab StartIcon="@Icons.Material.Filled.FileDownload" Label="Export Calendar File" OnClick="ExportCalendarFile" />
+            </MudItem>
+        </MudGrid>
+
+        <div class="my-8"/>
+    </MudPaper>
+        }
+
+@code {
+
+    /// <summary>
+    /// Helper class for the site to be able to generate calendar file from the JSON type events.
+    /// </summary>
+    public class Event
+    {
+        public string Name { get; set; }
+
+        public string StartDate { get; set; }
+
+        public string EndDate { get; set; }
+    }
+
+    private bool FinishedLoading;
+
+    private Dictionary<String, List<Event>> siteDict;
+
+    private IReadOnlyCollection<Event> SelectedValues { get; set; }
+
+    private int SelectedEventCount => SelectedValues?.Count ?? 0;
+
+
+    private string tostringFunc() => (SelectedValues != null) ? string.Join(", ", SelectedValues) : "";
+
+
+    /// <summary>
+    /// When the program loads, load the preset events from the JSON file.
+    /// </summary>
+    /// <returns> A Task </returns>
+    protected override async Task OnInitializedAsync()
+    {
+        AppState.EventSelectComponent = this;
+        await UpdateSiteValues();
+    }
+
+    /// <summary>
+    /// Updates the dictionary which holds all the events from the selected site.
+    /// </summary>
+    /// <returns> A Task </returns>
+    public async Task UpdateSiteValues()
+    {
+        FinishedLoading = false;
+
+        if (siteDict != null)
+        {
+            siteDict = await Http.GetFromJsonAsync<Dictionary<string, List<Event>>>(AppState.ChosenPath) ?? new();
+        }
+        else
+        {
+            siteDict = new();
+        }
+        FinishedLoading = true;
+        SelectedValues = [];
+        StateHasChanged();
+    }
+
+    /// <summary>
+    /// Exports the selected events to a calendar file and triggers a download.
+    /// </summary>
+    private async Task ExportCalendarFile()
+    {
+        // Get the event lists separated from the list of selected events
+        List<string> SelectedNames = new();
+        List<DateOnly> SelectedStartDates = new();
+        List<DateOnly> SelectedEndDates = new();
+
+        if (SelectedValues != null)
+        {
+            foreach (var eventItem in SelectedValues)
+            {
+                SelectedNames.Add(eventItem.Name);
+                SelectedStartDates.Add( DateOnly.Parse(eventItem.StartDate) );
+                SelectedEndDates.Add  ( DateOnly.Parse(eventItem.EndDate) );
+            }
+        }
+
+        // Create calendar file
+
+        var bytes = CalendarController.GetCalendarFileFromSelected(SelectedNames, SelectedStartDates, SelectedEndDates);
+
+        string base64String = Convert.ToBase64String(bytes);
+
+        await JSRuntime.InvokeVoidAsync(
+          "downloadFromByteArray",
+          new
+          {
+              ByteArray = base64String,
+              FileName =  "Selected Events" + ".ics",
+              ContentType = "text/calendar"
+          }); 
+    }
+
+    /// <summary>
+    /// Calls the Toggle Second Part method in the SiteSelector component to bring the user
+    /// to the first page.
+    /// </summary>
+    protected async Task BackToFirstSection()
+    {
+        await AppState.SiteSelectorComponent.ToggleSecondSection();
+    }
+}

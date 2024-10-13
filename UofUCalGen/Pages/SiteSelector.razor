@@ -1,77 +1,96 @@
 ﻿@page "/"
 @inject HttpClient Http
+@inject AppState AppState
 
-<PageTitle>SiteSelector</PageTitle>
+<MudThemeProvider IsDarkMode="true" Theme="AppState.SchoolSpiritTheme" />
 
-<MudThemeProvider IsDarkMode="true" Theme="_theme" />
-
-<MudPaper Class="pa-4 ma-16">
-    <MudText Typo="Typo.subtitle2">Welcome! Please Copy and paste a link to the University of Utah Semester Calendar page or select a page from the drop-down.</MudText>
+<MudPaper Class="pa-4 my-16 mx-2 mx-sm-8 mx-md-16 mx-lg-16 mx-xl-16 mx-xxl-16">
+    <MudText Typo="Typo.subtitle2" Align="Align.Center">Welcome! Please select a semester from the drop-down below to begin.</MudText>
 </MudPaper>
 
 @if (sites == null)
 {
-    <MudPaper Class="pa-4 ma-16">
+    <MudPaper Class="pa-4 my-16 mx-2 mx-sm-8 mx-md-16 mx-lg-16 mx-xl-16 mx-xxl-16">
         <MudText Typo="Typo.subtitle2">Loading...</MudText>
     </MudPaper>
 }
 else
 {
-    <MudPaper Class="pa-4 ma-16">
+    <MudPaper Class="pa-4 my-16 mx-2 mx-sm-8 mx-md-16 mx-lg-16 mx-xl-16 mx-xxl-16">
         <!-- MudSelect component to display a drop-down list of semester calendar pages -->
-        <MudSelect Placeholder="Select Semester" @bind-Value="siteValue" HelperText="Semester" ToStringFunc="@tostringFunc" CloseIcon="@Icons.Material.Filled.Flag" AdornmentColor="Color.Tertiary"
-                        AnchorOrigin="Origin.CenterCenter" TransformOrigin="Origin.CenterCenter" Variant="Variant.Outlined">
+        <div class="docs-section-content-inner relative d-flex flex-grow-1 flex-wrap justify-center align-center px-12 pb-8 pt-2">
+            <MudSelect Placeholder="Select Semester" @bind-Value="siteValue" Label="Semester" ToStringFunc="@tostringFunc"
+                       OpenIcon="@Icons.Material.Filled.CalendarMonth" CloseIcon="@Icons.Material.Filled.CalendarMonth" AdornmentColor="Color.Primary"
+                       Variant="Variant.Outlined" Disabled="@AppState.FirstSectionDisabled">
 
-        @foreach (var site in sites)
-        {
-            <!-- Add all sites to the drop-down list -->
-            <MudSelectItem Value="@(site)" />
-        }
-        </MudSelect>
-    
-        <div class="d-flex mud-width-full align-center mt-8">
+            @foreach (var site in sites)
+            {
+                <!-- Add all sites to the drop-down list -->
+                <MudSelectItem Value="@(site)" />
+            }
+            </MudSelect>
+        </div>
+
+        <div class="docs-section-content-inner relative d-flex flex-grow-1 flex-wrap justify-center align-center px-8 pb-8 pt-2">
             <MudText Typo="Typo.subtitle1" Class="mr-2">Selected value: </MudText>
 
-            <MudChip T="string" Color="Color.Secondary">@(siteValue?.name ?? "Select Semester")</MudChip>
+            <MudChip T="string" Color="Color.Secondary">@(siteValue?.Name ?? "Select Semester")</MudChip>
+        </div>
+
+        <div class="docs-section-content-inner relative d-flex flex-grow-1 flex-wrap justify-center align-center px-8 pb-8 pt-2">
+            @if ((siteValue?.Name ?? "Select Semester") != "Select Semester")
+            {
+                <MudFab StartIcon="@Icons.Material.Filled.CloudDownload" Label="Grab Events From Site" Color="Color.Primary" OnClick="ToggleSecondSection" Disabled="@AppState.FirstSectionDisabled" />
+            }
         </div>
     </MudPaper>
+    
+    <MudCollapse Expanded="@AppState.SecondSectionExpanded">
+
+        @* Link to second part which generates calendar dates *@
+        <EventSelect />
+
+    </MudCollapse>
+
 }
 
 @code {
-    // Theme
-    private MudTheme _theme = new()
-        {
-            PaletteLight = new PaletteLight(),
-            PaletteDark = new PaletteDark()
-            {
-                Primary = Colors.Gray.Darken3,
-                Secondary = Colors.Red.Darken3,
-                Tertiary = Colors.Red.Darken2,
-                Background = Colors.Gray.Darken4,
-                AppbarBackground = Colors.Red.Darken4,
-            },
-
-            LayoutProperties = new LayoutProperties()
-            {
-                DrawerWidthLeft = "0px",
-                DrawerWidthRight = "0px"
-            }
-        };
 
     private Site siteValue { get; set; }
     private Site[]? sites;
 
+    /// <summary>
+    /// When the program loads, load the preset links from the JSON file.
+    /// </summary>
+    /// <returns> A Task </returns>
     protected override async Task OnInitializedAsync()
     {
+        AppState.FirstSectionDisabled = false;
+        AppState.SecondSectionExpanded = false;
+        AppState.SecondSectionEnabled = false;
+
+        // Site Selector component so EventSelect can access the ToggleSecondPart method
+        AppState.SiteSelectorComponent = this;
+
+        // Get Presets from JSON file
         sites = await Http.GetFromJsonAsync<Site[]>("preset-data/presetLinks.json");
     }
 
-    public class Site
+    public async Task ToggleSecondSection()
     {
-        public string name { get; set; }
-
-        public string url { get; set; }
+        AppState.ChosenPath = siteValue.Path;
+        AppState.FirstSectionDisabled = !AppState.FirstSectionDisabled;
+        AppState.SecondSectionExpanded = !AppState.SecondSectionExpanded;
+        await AppState.EventSelectComponent.UpdateSiteValues();
+        StateHasChanged();
     }
 
-    private Func<Site, string> tostringFunc = ci => ci.name;
+    private class Site
+    {
+        public string Name { get; set; }
+
+        public string Path { get; set; }
+    }
+
+    private Func<Site, string> tostringFunc = ci => ci.Name;
 }
