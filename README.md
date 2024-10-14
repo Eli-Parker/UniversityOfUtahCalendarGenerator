@@ -6,22 +6,27 @@ I can't stand that my university doesn't allow me to export the important calend
 dates to my calendar, so as a software engineer I decided to implement a fix for my problem!
 
 Using the knowledge I've gained both from half a decade of software engineering practice and schooling from the Computer Science program here at the University of Utah,
-I made a C# application which scrapes the university's websites to generate CUSTOM .ics links for the students here!
+I made a C# application which scrapes the university's websites to generate CUSTOM .ics links for the students here! 
 
-**Note that this program is still a WIP, but this outlines the current plan for the final build.**
+There are currently two planned implementations, a blazor WASM app (made for ease of use for other students, and as an experiment with a new program type personally)
+and a windows forms (or similar) desktop app which can scrape data live (meant for a full showcase of the program's ability)
+
+**Note that this program is still a WIP, but one of the two planned implementations has been finished and is currently on the main branch.**
 
 ### The Program Idea
 
-The program, as I currently see it, works as follows:
+The program, works as follows:
 
-1. **Grabbing Site Data:** The user selects from a drop-down of semesters or inputs a website URL which is the semester schedule for the university.
-All university schedules from 2019-2024 are formatted exactly the same, so as long as the formatting doesn't change they can input any link for their semester
+1. **Data Grabbing:** Before the app is published, static JSON files are generated from scraped site data which contain dictionaries of all events grouped by the table they came from.
+All university schedule websites from mid 2019-2025 are formatted exactly the same, so as long as the formatting doesn't change this program will remain fucntional for future semesters.
 
-2. **Desired Event Selection:** The user is directed to a screen with a list of all events formatted into the same structure that they are on the website, and they can check off any events they want added.
+2. **Selecting Specific Site Data:** The user selects from a drop-down of semesters which correspond to that semester's schedule.
+
+3. **Desired Event Selection:** The user is directed to a screen with a list of all events formatted into the same structure that they are on the website, and they can check off any events they want added.
 This gives the user control over which events they care about. For example, a student could want to know when all the breaks
 are and when they can register for the next semester, but they don't want to know about the last day to drop classes. This program gives the user that flexibility.
 
-3. **Export of Event Data:** An .ics file is generated with the events they selected, and they can simply click a button or download the file to import it into their calendar of choice!
+4. **Export of Event Data:** An .ics file is generated with the events they selected, and they can simply click a button or download the file to import it into their calendar of choice!
 
 ## Table of Contents
 - [Installation](#installation)
