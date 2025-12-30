@@ -54,7 +54,7 @@ the design guidelines in the style cop and .editorconfig files.
 ## Contact Information
 
 Feel free to contact me using my [LinkedIn profile](https://www.linkedin.com/in/eli-parker-a96338302/)
-or shoot me an email at <racecar47@icloud.com>
+or shoot me an email at <me@eliparker.dev>
 
 ## Acknowledgments
 
